@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Jonathan Lin — Mechanical Engineering Portfolio</title>
+  <meta name="description" content="Jonathan Lin, mechanical engineering student at Northeastern University. SolidWorks CAD, prototyping, and design iteration on real builds." />
+  <meta property="og:title" content="Jonathan Lin — Mechanical Engineering Portfolio" />
+  <meta property="og:description" content="Design iterations, CAD, and builds: a conveyor-driven fraction game and a vehicle side-proximity sensor." />
+  <meta property="og:image" content="images/cv-final.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Archivo', 'Helvetica Neue', 'Arial', 'sans-serif'],
+            sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            ink: '#070b16',
+            panel: '#0e1426',
+            line: '#1e2a47',
+            blueprint: '#8b93ff',
+            measure: '#3ee6a8',
+            mist: '#a9b3cc'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --ink: #070b16;
+      --panel: #0e1426;
+      --line: #1e2a47;
+      --blueprint: #8b93ff;
+      --measure: #3ee6a8;
+      --text: #e7ebf5;
+      --mist: #a9b3cc;
+      color-scheme: dark;
+    }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px));
+    }
+    body {
+      background-color: var(--ink);
+      color: var(--text);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      -webkit-font-smoothing: antialiased;
+    }
+    .drafting-grid {
+      background-image:
+        linear-gradient(rgba(139,147,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,147,255,.055) 1px, transparent 1px),
+        linear-gradient(rgba(139,147,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,147,255,.025) 1px, transparent 1px);
+      background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+      background-position: -1px -1px;
+    }
+    .glow {
+      background:
+        radial-gradient(60rem 40rem at 85% -10%, rgba(139,147,255,.16), transparent 60%),
+        radial-gradient(40rem 30rem at -10% 30%, rgba(62,230,168,.07), transparent 60%);
+    }
+    .glass {
+      background: rgba(14,20,38,.58);
+      border: 1px solid rgba(139,147,255,.14);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+    }
+    .display-wide { font-variation-settings: "wdth" 118; }
+
+    /* Header */
+    #site-header { padding-top: env(safe-area-inset-top, 0px); transition: background-color .3s ease, border-color .3s ease; }
+    #site-header.scrolled { background: rgba(7,11,22,.75); border-color: rgba(139,147,255,.16); }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px;
+      background: var(--measure); transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+    .nav-link.active { color: #fff; }
+
+    .burger span { display: block; height: 2px; width: 22px; border-radius: 2px; background: currentColor; transition: transform .3s ease, opacity .2s ease; }
+    .burger span + span { margin-top: 5px; }
+    .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .35s ease, opacity .25s ease; }
+    #mobile-menu.open { grid-template-rows: 1fr; opacity: 1; }
+    #mobile-menu > div { overflow: hidden; }
+    #mobile-menu a { transform: translateY(-6px); opacity: 0; transition: transform .35s ease, opacity .35s ease; }
+    #mobile-menu.open a { transform: none; opacity: 1; }
+
+    /* Hero drawing */
+    .draw { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 1.8s cubic-bezier(.65,0,.35,1) forwards; }
+    .draw.d2 { animation-delay: .35s; }
+    .draw.d3 { animation-delay: .7s; }
+    .fade-late { opacity: 0; animation: fadeIn .6s ease forwards; animation-delay: 1.6s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .belt-track { stroke-dasharray: 6 8; animation: belt 1.4s linear infinite; }
+    .belt-track.reverse { animation-direction: reverse; }
+    @keyframes belt { to { stroke-dashoffset: -28; } }
+    .piece-a { animation: travelA 7s ease-in-out infinite; }
+    .piece-b { animation: travelB 9s ease-in-out infinite; }
+    @keyframes travelA { 0%,8% { transform: translateY(0); } 45%,55% { transform: translateY(180px); } 92%,100% { transform: translateY(0); } }
+    @keyframes travelB { 0%,10% { transform: translateY(180px); } 50%,60% { transform: translateY(40px); } 95%,100% { transform: translateY(180px); } }
+    .spin-led { animation: led 2.4s linear infinite; opacity: .25; }
+    @keyframes led { 0%, 12% { opacity: 1; } 13%, 100% { opacity: .25; } }
+
+    /* Cards */
+    .lift { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+    .lift:hover { transform: translateY(-4px); border-color: rgba(139,147,255,.4); box-shadow: 0 18px 40px -20px rgba(139,147,255,.45); }
+    .lift:hover .cover-img { transform: scale(1.04); }
+    .cover-img { transition: transform .6s ease; }
+    .project-card { transition: opacity .3s ease, transform .3s ease; }
+    .project-card.is-hidden { display: none; }
+    .project-card.is-leaving { opacity: 0; transform: scale(.97); }
+    .project-card.is-entering { opacity: 0; transform: translateY(8px); }
+    .filter-btn[aria-pressed="true"] { background: var(--blueprint); color: #0a0f1f; border-color: var(--blueprint); }
+
+    /* Iteration log */
+    .stage { position: relative; }
+    .stage-rail::before {
+      content: ""; position: absolute; top: 14px; bottom: -40px; left: 15px; width: 1px;
+      background: linear-gradient(to bottom, rgba(139,147,255,.7), rgba(139,147,255,.12));
+    }
+    .stage:last-child .stage-rail::before { display: none; }
+    .shot {
+      position: relative; display: block; overflow: hidden; border-radius: 14px;
+      border: 1px solid var(--line); background: #0b1122; cursor: zoom-in;
+    }
+    .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .shot:hover img { transform: scale(1.03); }
+    .shot.contain img { object-fit: contain; background: #fff; }
+    .shot .cap {
+      position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 10px 8px;
+      font-size: 12px; color: #fff; background: linear-gradient(to top, rgba(7,11,22,.9), transparent);
+    }
+
+    /* Timeline */
+    .timeline::before {
+      content: ""; position: absolute; top: 8px; bottom: 8px; left: 11px; width: 1px;
+      background: linear-gradient(to bottom, var(--blueprint), rgba(139,147,255,.15));
+    }
+    @media (min-width: 768px) { .timeline::before { left: 199px; } }
+
+    /* Form */
+    .field { background: rgba(7,11,22,.6); border: 1px solid var(--line); transition: border-color .2s ease, box-shadow .2s ease; }
+    .field:focus { outline: none; border-color: var(--blueprint); box-shadow: 0 0 0 3px rgba(139,147,255,.22); }
+    .field[aria-invalid="true"] { border-color: #f87171; }
+
+    /* Lightbox */
+    #lightbox { padding: 0; border: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; }
+    #lightbox::backdrop { background: rgba(4,7,15,.92); backdrop-filter: blur(6px); }
+    #lightbox[open] { display: flex; }
+    #lb-img { max-height: calc(100vh - 140px); max-width: min(1200px, 100vw - 32px); object-fit: contain; border-radius: 12px; }
+
+    :focus-visible { outline: 2px solid var(--measure); outline-offset: 3px; border-radius: 6px; }
+    img { max-width: 100%; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      .draw { stroke-dashoffset: 0; }
+      .fade-late { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="font-sans drafting-grid min-h-screen">
+  <div class="glow fixed inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blueprint focus:text-ink focus:px-4 focus:py-2 focus:rounded-lg">Skip to content</a>
+
+  <!-- ================= NAV ================= -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 border-b border-transparent backdrop-blur-xl">
+    <nav class="mx-auto max-w-6xl px-5 sm:px-8 h-[72px] flex items-center justify-between" aria-label="Primary">
+      <a href="#top" class="flex items-center gap-3 group" aria-label="Jonathan Lin, back to top">
+        <span class="grid place-items-center h-9 w-9 rounded-lg border border-blueprint/40 bg-blueprint/10 font-display display-wide font-bold text-sm text-blueprint group-hover:bg-blueprint group-hover:text-ink transition-colors">JL</span>
+        <span class="font-display font-semibold tracking-tight text-[15px] hidden sm:block">Jonathan Lin</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm text-mist">
+        <a href="#about" class="nav-link hover:text-white transition-colors">About</a>
+        <a href="#projects" class="nav-link hover:text-white transition-colors">Projects</a>
+        <a href="#experience" class="nav-link hover:text-white transition-colors">Experience</a>
+        <a href="#contact" class="nav-link hover:text-white transition-colors">Contact</a>
+        <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-measure/40 text-measure px-4 py-2 hover:bg-measure hover:text-ink transition-colors">
+          <i data-lucide="file-text" class="h-4 w-4"></i> Resume
+        </a>
+      </div>
+      <button id="menu-btn" class="burger md:hidden p-2 -mr-2 text-white" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden">
+      <div>
+        <div class="glass mx-4 mb-4 rounded-2xl p-3 flex flex-col text-base">
+          <a href="#about" class="mobile-link rounded-xl px-4 py-3 hover:bg-white/5">About</a>
+          <a href="#projects" class="mobile-link rounded-xl px-4 py-3 hover:bg-white/5">Projects</a>
+          <a href="#fraction-frenzy" class="mobile-link rounded-xl px-4 py-3 pl-8 text-mist hover:bg-white/5">Fraction Frenzy</a>
+          <a href="#proximity-sensor" class="mobile-link rounded-xl px-4 py-3 pl-8 text-mist hover:bg-white/5">Proximity sensor</a>
+          <a href="#experience" class="mobile-link rounded-xl px-4 py-3 hover:bg-white/5">Experience</a>
+          <a href="#contact" class="mobile-link rounded-xl px-4 py-3 hover:bg-white/5">Contact</a>
+          <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="mobile-link mt-2 rounded-xl px-4 py-3 bg-measure text-ink font-medium flex items-center gap-2">
+            <i data-lucide="file-text" class="h-4 w-4"></i> Open resume (PDF)
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section id="top" class="relative pt-[calc(72px+env(safe-area-inset-top,0px))]">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 pb-20 md:pt-24 md:pb-28 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-10 items-center">
+        <div>
+          <p class="inline-flex items-center gap-2 rounded-full border border-measure/30 bg-measure/10 px-3 py-1 text-[13px] text-measure">
+            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-measure opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-measure"></span></span>
+            Open to co-op and research roles
+          </p>
+          <h1 class="mt-6 font-display display-wide font-extrabold tracking-[-0.02em] leading-[0.98] text-[clamp(2.6rem,6.4vw,4.75rem)]">
+            I design the part, build it, and measure what it does.
+          </h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-mist">
+            Mechanical engineering student at Northeastern (3.93 GPA). I take designs from cardboard mockup to SolidWorks model to working build, and I keep iterating until the numbers improve. Right now that means undergraduate research on magnetic thin films.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#projects" class="inline-flex items-center gap-2 rounded-xl bg-blueprint px-6 py-3.5 font-semibold text-ink hover:bg-white transition-colors">
+              View projects <i data-lucide="arrow-down" class="h-4 w-4"></i>
+            </a>
+            <a href="https://github.com/Creations111" target="_blank" rel="noopener" class="glass inline-flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm hover:border-blueprint/50 transition-colors"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
+            <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" class="glass inline-flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm hover:border-blueprint/50 transition-colors"><i data-lucide="linkedin" class="h-4 w-4"></i> LinkedIn</a>
+            <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="glass inline-flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm hover:border-blueprint/50 transition-colors"><i data-lucide="file-text" class="h-4 w-4"></i> Resume</a>
+          </div>
+        </div>
+
+        <figure class="glass rounded-3xl p-4 sm:p-6">
+          <figcaption class="sr-only">Technical drawing of Fraction Frenzy: a 14 by 14 by 4 inch board with two conveyor belts, a 12-step track beside each belt, a central LED spinner, and two LCD screens.</figcaption>
+          <svg viewBox="0 0 520 420" class="w-full h-auto" aria-hidden="true">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3ee6a8"/></marker>
+            </defs>
+            <!-- Board -->
+            <rect class="draw" x="60" y="40" width="300" height="300" rx="6" fill="none" stroke="#8b93ff" stroke-width="2"/>
+            <!-- Belts -->
+            <g class="draw d2" fill="none" stroke="#8b93ff" stroke-width="1.5">
+              <rect x="82" y="66" width="50" height="248" rx="25"/>
+              <rect x="288" y="66" width="50" height="248" rx="25"/>
+            </g>
+            <line class="belt-track" x1="107" y1="92" x2="107" y2="288" stroke="#8b93ff" stroke-opacity=".5" stroke-width="2"/>
+            <line class="belt-track reverse" x1="313" y1="92" x2="313" y2="288" stroke="#8b93ff" stroke-opacity=".5" stroke-width="2"/>
+            <!-- Sandpaper-wrapped dowels -->
+            <g class="fade-late" fill="#0e1426" stroke="#8b93ff" stroke-width="1.5">
+              <circle cx="107" cy="91" r="15"/><circle cx="107" cy="289" r="15"/>
+              <circle cx="313" cy="91" r="15"/><circle cx="313" cy="289" r="15"/>
+              <circle cx="107" cy="91" r="3" fill="#8b93ff"/><circle cx="107" cy="289" r="3" fill="#8b93ff"/>
+              <circle cx="313" cy="91" r="3" fill="#8b93ff"/><circle cx="313" cy="289" r="3" fill="#8b93ff"/>
+            </g>
+            <!-- 12-step tracks -->
+            <g class="fade-late" fill="none" stroke="#a9b3cc" stroke-opacity=".45" stroke-width="1">
+              <rect x="66" y="70" width="11" height="240"/><rect x="343" y="70" width="11" height="240"/>
+              <path d="M66 90h11M66 110h11M66 130h11M66 150h11M66 170h11M66 190h11M66 210h11M66 230h11M66 250h11M66 270h11M66 290h11"/>
+              <path d="M343 90h11M343 110h11M343 130h11M343 150h11M343 170h11M343 190h11M343 210h11M343 230h11M343 250h11M343 270h11M343 290h11"/>
+            </g>
+            <!-- LCDs -->
+            <g class="draw d3" fill="none" stroke="#a9b3cc" stroke-width="1.2">
+              <rect x="175" y="62" width="70" height="34" rx="3"/>
+              <rect x="175" y="284" width="70" height="34" rx="3"/>
+            </g>
+            <g class="fade-late" fill="#8b93ff" fill-opacity=".18" stroke="#8b93ff" stroke-opacity=".6">
+              <rect x="183" y="70" width="54" height="18" rx="2"/>
+              <rect x="183" y="292" width="54" height="18" rx="2"/>
+            </g>
+            <!-- Spinner -->
+            <g class="draw d2" fill="none" stroke="#8b93ff" stroke-width="1.5">
+              <rect x="170" y="150" width="80" height="80" rx="4"/>
+              <circle cx="210" cy="190" r="31"/>
+            </g>
+            <g class="fade-late" stroke="#8b93ff" stroke-opacity=".55" stroke-width="1">
+              <path d="M210 159v62M179 190h62M188 168l44 44M232 168l-44 44"/>
+            </g>
+            <g class="fade-late" fill="#3ee6a8">
+              <circle class="spin-led" style="animation-delay:0s" cx="210" cy="168" r="3"/>
+              <circle class="spin-led" style="animation-delay:.3s" cx="226" cy="174" r="3"/>
+              <circle class="spin-led" style="animation-delay:.6s" cx="232" cy="190" r="3"/>
+              <circle class="spin-led" style="animation-delay:.9s" cx="226" cy="206" r="3"/>
+              <circle class="spin-led" style="animation-delay:1.2s" cx="210" cy="212" r="3"/>
+              <circle class="spin-led" style="animation-delay:1.5s" cx="194" cy="206" r="3"/>
+              <circle class="spin-led" style="animation-delay:1.8s" cx="188" cy="190" r="3"/>
+              <circle class="spin-led" style="animation-delay:2.1s" cx="194" cy="174" r="3"/>
+            </g>
+            <!-- Game pieces -->
+            <g class="fade-late">
+              <g class="piece-a"><rect x="96" y="96" width="22" height="22" rx="6" fill="#3ee6a8"/></g>
+              <g class="piece-b"><rect x="302" y="96" width="22" height="22" rx="6" fill="#8b93ff"/></g>
+            </g>
+            <!-- Width dimension -->
+            <g class="fade-late">
+              <line x1="60" y1="345" x2="60" y2="392" stroke="#3ee6a8" stroke-opacity=".5"/>
+              <line x1="360" y1="345" x2="360" y2="392" stroke="#3ee6a8" stroke-opacity=".5"/>
+              <line x1="64" y1="385" x2="356" y2="385" stroke="#3ee6a8" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <rect x="186" y="376" width="48" height="18" fill="#0e1426"/>
+              <text x="210" y="389" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#3ee6a8">14.00″</text>
+            </g>
+            <!-- Depth dimension -->
+            <g class="fade-late">
+              <line x1="55" y1="40" x2="18" y2="40" stroke="#3ee6a8" stroke-opacity=".5"/>
+              <line x1="55" y1="340" x2="18" y2="340" stroke="#3ee6a8" stroke-opacity=".5"/>
+              <line x1="26" y1="44" x2="26" y2="336" stroke="#3ee6a8" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <rect x="14" y="170" width="24" height="40" fill="#0e1426"/>
+              <text x="26" y="190" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#3ee6a8" transform="rotate(-90 26 190)">14.00″</text>
+            </g>
+            <!-- Side view, half scale -->
+            <rect class="draw d2" x="380" y="262" width="110" height="31" rx="3" fill="none" stroke="#8b93ff" stroke-width="1.5"/>
+            <g class="fade-late">
+              <line x1="500" y1="262" x2="500" y2="293" stroke="#3ee6a8" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <text x="435" y="252" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#a9b3cc">side view, 1:2</text>
+              <text x="435" y="313" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#3ee6a8">4.00″ tall</text>
+            </g>
+            <!-- Drift callout -->
+            <g class="fade-late">
+              <line x1="338" y1="150" x2="398" y2="118" stroke="#a9b3cc" stroke-opacity=".6"/>
+              <circle cx="338" cy="150" r="3" fill="#3ee6a8"/>
+              <text x="384" y="104" font-family="IBM Plex Mono, monospace" font-size="11" fill="#e7ebf5">drift −5 mm</text>
+              <text x="384" y="120" font-family="IBM Plex Mono, monospace" font-size="10" fill="#a9b3cc">over 7 CAD revs</text>
+            </g>
+          </svg>
+          <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 border border-line rounded-xl overflow-hidden text-[13px]">
+            <div class="p-3 border-b sm:border-b-0 border-r border-line"><div class="font-mono text-[11px] text-mist">Part</div><div class="font-medium mt-0.5">Fraction Frenzy</div></div>
+            <div class="p-3 border-b sm:border-b-0 sm:border-r border-line"><div class="font-mono text-[11px] text-mist">CAD lead</div><div class="font-medium mt-0.5">J. Lin</div></div>
+            <div class="p-3 border-r border-line"><div class="font-mono text-[11px] text-mist">Iterations</div><div class="font-medium mt-0.5">7 in SolidWorks</div></div>
+            <div class="p-3"><div class="font-mono text-[11px] text-mist">User rating</div><div class="font-medium mt-0.5">8/10, n = 15</div></div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16">
+        <div>
+          <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Hands on the hardware, eyes on the data.</h2>
+          <div class="mt-6 space-y-5 text-mist leading-relaxed max-w-[60ch]">
+            <p>I’m a mechanical engineering student at Northeastern University, graduating in May 2029. I like owning a problem from the first sketch to the last measurement. My projects tend to start as cardboard, become SolidWorks parts, and go through several printed revisions before they work the way I want.</p>
+            <p>As CAD lead on Fraction Frenzy, I took a conveyor drivetrain through 7 iterations to stabilize the motor mounts and cut belt drift by 5 mm. On my vehicle proximity sensor, I scrapped a motion-sensor prototype that couldn’t see stationary curbs and rebuilt around ultrasonic sensors in 3 weeks.</p>
+            <p>In the Advanced Materials and Microsystems Laboratory, I design and fabricate the fixtures that hold magnetic thin-film samples and process FMR data in MATLAB. At AutoZone, I diagnose real electrical faults on cars every day. I’m a member of Northeastern Electric Racing and ASME, and I speak English and Mandarin natively.</p>
+          </div>
+          <dl class="mt-8 grid grid-cols-3 gap-px rounded-2xl overflow-hidden border border-line bg-line text-center">
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">GPA</dt><dd class="font-display display-wide font-bold text-2xl mt-1">3.93</dd></div>
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">Graduating</dt><dd class="font-display display-wide font-bold text-2xl mt-1">2029</dd></div>
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">Based in</dt><dd class="font-display display-wide font-bold text-2xl mt-1">Boston</dd></div>
+          </dl>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="glass lift rounded-2xl p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded-xl bg-blueprint/15 text-blueprint"><i data-lucide="box" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">CAD and software</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded-lg border border-blueprint/30 bg-blueprint/10 px-3 py-1">SolidWorks</li>
+              <li class="rounded-lg border border-blueprint/30 bg-blueprint/10 px-3 py-1">AutoCAD</li>
+              <li class="rounded-lg border border-blueprint/30 bg-blueprint/10 px-3 py-1">MATLAB</li>
+              <li class="rounded-lg border border-blueprint/30 bg-blueprint/10 px-3 py-1">Python</li>
+              <li class="rounded-lg border border-blueprint/30 bg-blueprint/10 px-3 py-1">MicroPython</li>
+            </ul>
+          </div>
+          <div class="glass lift rounded-2xl p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded-xl bg-measure/15 text-measure"><i data-lucide="hammer" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Fabrication</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded-lg border border-measure/30 bg-measure/10 px-3 py-1">3D printing</li>
+              <li class="rounded-lg border border-measure/30 bg-measure/10 px-3 py-1">Laser cutting</li>
+              <li class="rounded-lg border border-measure/30 bg-measure/10 px-3 py-1">Waterjet</li>
+              <li class="rounded-lg border border-measure/30 bg-measure/10 px-3 py-1">Soldering</li>
+              <li class="rounded-lg border border-measure/30 bg-measure/10 px-3 py-1">Woodworking</li>
+            </ul>
+          </div>
+          <div class="glass lift rounded-2xl p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded-xl bg-violet-400/15 text-violet-300"><i data-lucide="cpu" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Electronics and test</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">Raspberry Pi Pico</li>
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">DC motors and drivers</li>
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">Ultrasonic sensors</li>
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">Multimeters</li>
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">OBD scanners</li>
+              <li class="rounded-lg border border-violet-400/30 bg-violet-400/10 px-3 py-1">Optical cantilever rig</li>
+            </ul>
+          </div>
+          <div class="glass lift rounded-2xl p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded-xl bg-sky-400/15 text-sky-300"><i data-lucide="sigma" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Coursework and methods</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Thermodynamics</li>
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Statics</li>
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Materials science</li>
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Diff. eq. and linear algebra</li>
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Calculus III</li>
+              <li class="rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1">Kepner-Tregoe analysis</li>
+            </ul>
+          </div>
+          <div class="glass rounded-2xl p-6 sm:col-span-2 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded-xl bg-white/10"><i data-lucide="languages" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Languages</h3></div>
+            <ul class="flex flex-wrap gap-2 text-sm">
+              <li class="rounded-lg border border-white/15 bg-white/5 px-3 py-1">English, native</li>
+              <li class="rounded-lg border border-white/15 bg-white/5 px-3 py-1">Mandarin, native</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECT GRID ================= -->
+    <section id="projects" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Featured projects</h2>
+            <p class="mt-3 text-mist max-w-xl">Each build below has a full case study with the prototypes that failed, what I changed, and the final result.</p>
+          </div>
+          <div class="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+            <button class="filter-btn rounded-full border border-line px-4 py-2 text-sm hover:border-blueprint/60 transition-colors" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn rounded-full border border-line px-4 py-2 text-sm hover:border-blueprint/60 transition-colors" data-filter="cad" aria-pressed="false">CAD and fabrication</button>
+            <button class="filter-btn rounded-full border border-line px-4 py-2 text-sm hover:border-blueprint/60 transition-colors" data-filter="embedded" aria-pressed="false">Embedded</button>
+            <button class="filter-btn rounded-full border border-line px-4 py-2 text-sm hover:border-blueprint/60 transition-colors" data-filter="data" aria-pressed="false">Data analysis</button>
+          </div>
+        </div>
+        <div id="project-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <p id="project-empty" class="hidden mt-10 text-mist">No projects in this category yet. Choose “All” to see everything.</p>
+      </div>
+    </section>
+
+    <!-- ================= CASE STUDY 1 ================= -->
+    <section id="fraction-frenzy" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <p class="font-mono text-sm text-measure">Case study 01 · Cornerstone of Engineering 2 · Spring 2026</p>
+        <h2 class="mt-3 font-display display-wide font-bold text-3xl md:text-[3rem] leading-[1.05] tracking-tight max-w-3xl">Fraction Frenzy: a conveyor-belt board game for 5th-grade math</h2>
+
+        <div class="mt-10 grid lg:grid-cols-[1.35fr_1fr] gap-8 items-start">
+          <a href="images/cv-final.jpg" class="shot aspect-[4/3]" data-gallery="ff" data-caption="Final build at the showcase: two conveyor belts, a central LED spinner, two LCDs, and a keypad for each team.">
+            <img src="images/cv-final.jpg" alt="The finished Fraction Frenzy board game, painted in a meadow theme, with two conveyor belts, a central spinner, an LCD, and a keypad." loading="lazy" />
+          </a>
+          <div class="space-y-6">
+            <dl class="grid grid-cols-2 gap-3">
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">CAD iterations</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">7</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Belt drift</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">−5 mm</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Avg. user rating</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">8/10</dd><dd class="text-xs text-mist mt-0.5">from 15 users</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Board envelope</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">14×14×4″</dd></div>
+            </dl>
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-display font-semibold">My role: CAD Lead and Project Manager</h3>
+              <p class="mt-2 text-sm text-mist leading-relaxed">I modeled all of the key SolidWorks parts and the final assembly, designed the drivetrain for both conveyor belts, 3D-printed the dowels and game pieces, tensioned the belts, supported the wiring and MicroPython, and coordinated our 5-person team to an on-time build.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.youtube.com/watch?v=qRW1JOPw_Ok" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-blueprint px-4 py-2.5 text-sm font-semibold text-ink hover:bg-white transition-colors"><i data-lucide="play-circle" class="h-4 w-4"></i> Watch demo</a>
+              <a href="https://github.com/Creations111?tab=repositories" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl border border-line px-4 py-2.5 text-sm hover:border-blueprint/60 transition-colors"><i data-lucide="github" class="h-4 w-4"></i> View code</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-2 gap-6">
+          <div class="glass rounded-2xl p-6">
+            <h3 class="font-display font-semibold text-lg">The problem</h3>
+            <p class="mt-3 text-mist leading-relaxed">Fifth graders at Melrose Leadership Academy in Oakland, California were struggling with adding fractions that have unlike denominators. The client asked for something team-based, competitive, and hands-on that would make that practice fun.</p>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <h3 class="font-display font-semibold text-lg">How it works</h3>
+            <p class="mt-3 text-mist leading-relaxed">A fraction problem appears on both LCDs, and each team types its answer on a keypad. A correct answer triggers an 8-section LED spinner valued 1–3, and that team’s conveyor belt carries its game piece forward. The first team to step 12 wins, and both belts reset.</p>
+          </div>
+        </div>
+
+        <h3 class="mt-16 font-display display-wide font-bold text-2xl md:text-3xl tracking-tight">Design iterations</h3>
+        <p class="mt-2 text-mist max-w-2xl">From a cardboard mockup to a laser-cut, motor-driven board in about ten weeks. Click any photo to enlarge it.</p>
+
+        <ol class="mt-10 space-y-10">
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">0</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 10–12</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Cardboard mockup</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">We built the first full-size layout from cardboard: a box with two belt channels and LCD frames, sandpaper-wrapped cardboard rollers on cardboard stands, and a stitched canvas belt. It proved the board layout worked, but the cardboard couldn’t hold the rollers in alignment.</p>
+              <div class="mt-5 grid grid-cols-3 gap-3">
+                <a href="images/cv-s0-cardboard-box.jpg" class="shot aspect-[3/4]" data-gallery="ff" data-caption="Cardboard mockup of the board layout, Feb 2026."><img src="images/cv-s0-cardboard-box.jpg" alt="Cardboard mockup of the game board with belt channels and LCD frames." loading="lazy" /><span class="cap">Board mockup</span></a>
+                <a href="images/cv-s0-cardboard-roller.jpg" class="shot aspect-[3/4]" data-gallery="ff" data-caption="First roller: cardboard core wrapped in sandpaper on cardboard stands."><img src="images/cv-s0-cardboard-roller.jpg" alt="A sandpaper-wrapped cardboard roller on cardboard stands." loading="lazy" /><span class="cap">Cardboard roller</span></a>
+                <a href="images/cv-s0-canvas-belt.jpg" class="shot aspect-[3/4]" data-gallery="ff" data-caption="First belt: stitched canvas."><img src="images/cv-s0-canvas-belt.jpg" alt="A stitched canvas belt lying on a cutting mat." loading="lazy" /><span class="cap">Canvas belt</span></a>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">1</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 23–25</p>
+              <h4 class="font-display font-semibold text-xl mt-1">First 3D-printed axles</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">I modeled the axle in SolidWorks and printed it to test material, dimensions, and how well it coupled to a DC gear motor. The second version seated the motor in a printed holder so the shaft stayed aligned under load.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <a href="images/cv-s1-axle-v1.jpg" class="shot aspect-[4/3]" data-gallery="ff" data-caption="Axle, version 1: testing material, dimensions, and motor fit."><img src="images/cv-s1-axle-v1.jpg" alt="White 3D-printed axle on a stand, coupled to a yellow DC gear motor." loading="lazy" /><span class="cap">Axle v1</span></a>
+                <a href="images/cv-s2-axle-v2.jpg" class="shot aspect-[4/3]" data-gallery="ff" data-caption="Axle, version 2: the motor now sits in a printed holder."><img src="images/cv-s2-axle-v2.jpg" alt="Purple 3D-printed axle on stands with the motor in a white printed holder." loading="lazy" /><span class="cap">Axle v2 with motor holder</span></a>
+              </div>
+              <div class="mt-5 max-w-3xl rounded-2xl border border-measure/30 bg-measure/[0.06] p-5">
+                <p class="flex items-center gap-2 font-display font-semibold text-measure"><i data-lucide="git-branch" class="h-4 w-4"></i> Design decision: DC gear motors, not servos</p>
+                <p class="mt-2 text-sm text-mist leading-relaxed">Our first plan drove each belt with a servo. A servo only sweeps 180°, and our calculation showed that would move the belt about 4 cm per actuation, which isn’t enough to cross the board. Continuous DC gear motors on a single motor driver could run each belt independently for as far as the game needed.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">2</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 25</p>
+              <h4 class="font-display font-semibold text-xl mt-1">First powered belt</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">The printed rollers, motor mount, and electronics ran together in the cardboard box. This was the first time a belt carried a game piece under motor power, and it gave us a test rig for everything that followed.</p>
+              <div class="mt-5 max-w-xl">
+                <a href="images/cv-s3-first-motion.jpg" class="shot aspect-[4/3]" data-gallery="ff" data-caption="First functional conveyor: printed rollers and motor mount in the cardboard test box, Feb 25."><img src="images/cv-s3-first-motion.jpg" alt="A working conveyor belt with printed rollers and a motor inside a cardboard box, with a breadboard and battery pack below." loading="lazy" /><span class="cap">First working conveyor</span></a>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">3</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Mar 17–21</p>
+              <h4 class="font-display font-semibold text-xl mt-1">CAD revisions to stabilize the mounts and stop drift</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">Testing exposed several problems. The first printed stands were too thick and wasted space, the motor-holder stand sat at the wrong height, and one part created excess friction on the belt. I slimmed the stands, corrected the motor mount, and revised the friction part. I also gave the dowels side ramps and sandpaper wraps so the belt tracked straight. Across 7 CAD iterations, these changes stabilized the motor mounts and cut belt drift by 5 mm.</p>
+              <div class="mt-5 grid grid-cols-3 gap-3">
+                <a href="images/cv-s4-stand-revised.jpg" class="shot contain aspect-square" data-gallery="ff" data-caption="Revised dowel stand: slimmed down from the first print."><img src="images/cv-s4-stand-revised.jpg" alt="SolidWorks render of the revised dowel stand." loading="lazy" /><span class="cap">Revised stand</span></a>
+                <a href="images/cv-s4-stand-motor.jpg" class="shot contain aspect-square" data-gallery="ff" data-caption="Stand with integrated motor holder, height corrected."><img src="images/cv-s4-stand-motor.jpg" alt="SolidWorks render of the dowel stand with an integrated motor holder." loading="lazy" /><span class="cap">Stand + motor holder</span></a>
+                <a href="images/cv-s4-dowel-revised.jpg" class="shot contain aspect-square" data-gallery="ff" data-caption="Revised dowel with side lips to keep the belt from sliding sideways."><img src="images/cv-s4-dowel-revised.jpg" alt="SolidWorks render of the revised dowel with flanged ends." loading="lazy" /><span class="cap">Revised dowel</span></a>
+              </div>
+              <a href="images/cv-assembly-drawing.jpg" class="shot contain mt-3 aspect-[1400/1082] max-w-3xl" data-gallery="ff" data-caption="My SolidWorks assembly drawing: section views and an exploded view of the full conveyor assembly."><img src="images/cv-assembly-drawing.jpg" alt="SolidWorks assembly drawing of the Fraction Frenzy conveyor assembly with section and exploded views." loading="lazy" /><span class="cap">Assembly drawing with section and exploded views</span></a>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">4</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Mar 19</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Plywood enclosure and rubber belts</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">The team moved everything into the laser-cut 14″ × 14″ × 4″ plywood enclosure. We also swapped the canvas belts for rubber, with Velcro sewn on to hold the game pieces.</p>
+              <div class="mt-5 max-w-xl">
+                <a href="images/cv-s5-plywood.jpg" class="shot aspect-[14/13]" data-gallery="ff" data-caption="Unpainted plywood build with rubber belts, LCD housings, and a keypad, Mar 19."><img src="images/cv-s5-plywood.jpg" alt="Unpainted laser-cut plywood game board with two rubber conveyor belts, LCD housings, and a keypad." loading="lazy" /><span class="cap">First full plywood build</span></a>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-measure bg-measure/15 font-mono text-xs text-measure">✓</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">April 2026</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Final build, tested with students</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">We added the LED spinner, painted the board in a meadow theme, and printed bilingual instruction brochures in English and Spanish. The game was delivered on deadline and presented at Melrose Leadership Academy, where 15 users gave it an average rating of 8/10 across all criteria.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <a href="images/cv-topdown.jpg" class="shot aspect-[4/3]" data-gallery="ff" data-caption="Final board from above."><img src="images/cv-topdown.jpg" alt="Top-down view of the finished painted game board." loading="lazy" /><span class="cap">Final, top view</span></a>
+                <a href="https://www.youtube.com/watch?v=qRW1JOPw_Ok" target="_blank" rel="noopener" class="yt shot aspect-[4/3] !cursor-pointer" data-yt="qRW1JOPw_Ok" aria-label="Play the Fraction Frenzy demo video">
+                  <img src="https://i.ytimg.com/vi/qRW1JOPw_Ok/hqdefault.jpg" alt="" loading="lazy" />
+                  <span class="absolute inset-0 grid place-items-center bg-ink/30"><span class="grid place-items-center h-14 w-14 rounded-full bg-blueprint text-ink"><i data-lucide="play" class="h-6 w-6"></i></span></span>
+                  <span class="cap">Demo video</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CASE STUDY 2 ================= -->
+    <section id="proximity-sensor" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <p class="font-mono text-sm text-measure">Case study 02 · Cornerstone of Engineering 1 · Fall 2025 · Solo project</p>
+        <h2 class="mt-3 font-display display-wide font-bold text-3xl md:text-[3rem] leading-[1.05] tracking-tight max-w-3xl">Vehicle side-proximity sensor</h2>
+
+        <div class="mt-10 grid lg:grid-cols-[1fr_1.2fr] gap-8 items-start">
+          <a href="images/vs-final.jpg" class="shot aspect-[3/4] max-w-md" data-gallery="vs" data-caption="Final build: two servo-swept ultrasonic sensors, a buzzer, and an LED on a laser-cut plywood enclosure.">
+            <img src="images/vs-final.jpg" alt="Laser-cut plywood box with two ultrasonic sensors on servo mounts, a red LED, and a black buzzer on top." loading="lazy" />
+          </a>
+          <div class="space-y-6">
+            <dl class="grid grid-cols-2 gap-3">
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Detection range</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">2–50 cm</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Swept sensors</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">2</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Full rebuild</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">3 weeks</dd></div>
+              <div class="glass rounded-xl p-4"><dt class="text-xs text-mist">Bill of materials</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">$26.30</dd></div>
+            </dl>
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display font-semibold text-lg">The problem</h3>
+              <p class="mt-3 text-mist leading-relaxed">Most cars have front and rear proximity sensors, but the sides are largely unprotected. A cyclist or a child on a bike alongside a turning car sits right in that blind zone. I set out to prototype a scaled-down side sensor that warns the driver more urgently as an object gets closer.</p>
+            </div>
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display font-semibold text-lg">How it works</h3>
+              <p class="mt-3 text-mist leading-relaxed">A Raspberry Pi Pico running MicroPython sweeps two servo-mounted ultrasonic sensors across each side. As an object closes in from 50 cm to 2 cm, the buzzer beeps faster and the LED flashes faster. Anything beyond the threshold triggers nothing, which prevents false alarms.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.youtube.com/shorts/TaLlRtZOmOg" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-blueprint px-4 py-2.5 text-sm font-semibold text-ink hover:bg-white transition-colors"><i data-lucide="play-circle" class="h-4 w-4"></i> Watch final demo</a>
+              <a href="https://github.com/Creations111?tab=repositories" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl border border-line px-4 py-2.5 text-sm hover:border-blueprint/60 transition-colors"><i data-lucide="github" class="h-4 w-4"></i> View code</a>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-16 font-display display-wide font-bold text-2xl md:text-3xl tracking-tight">Design iterations</h3>
+        <p class="mt-2 text-mist max-w-2xl">One scrapped concept, one redesign, and several enclosure revisions between November 9 and December 3.</p>
+
+        <ol class="mt-10 space-y-10">
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-red-400/70 bg-ink font-mono text-xs text-red-300">1</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 9, 2025 · Scrapped</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Motion-sensor prototype</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">My first version used a PIR motion sensor and a buzzer in a cardboard box. It worked on the bench, but it had a fundamental flaw: a motion sensor only triggers on things that move or give off heat. A curb doesn’t move, so the system would stay silent beside exactly the kind of obstacle a driver needs to know about. I scrapped it at the first check-in.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <a href="images/vs-v1-motion-proto.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Version 1: PIR motion sensor and buzzer in a duct-taped cardboard box."><img src="images/vs-v1-motion-proto.jpg" alt="Cardboard box held together with duct tape, with a PIR motion sensor on top and a breadboard inside." loading="lazy" /><span class="cap">V1 cardboard prototype</span></a>
+                <a href="images/vs-v1-motion-circuit.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Version 1 circuit: Pico, PIR motion sensor, buzzer, and LED."><img src="images/vs-v1-motion-circuit.jpg" alt="Circuit simulation of a Raspberry Pi Pico with a PIR motion sensor, buzzer, and LED." loading="lazy" /><span class="cap">V1 circuit</span></a>
+              </div>
+              <div class="mt-5 max-w-3xl rounded-2xl border border-measure/30 bg-measure/[0.06] p-5">
+                <p class="flex items-center gap-2 font-display font-semibold text-measure"><i data-lucide="git-branch" class="h-4 w-4"></i> Design decision: measure distance, not motion</p>
+                <p class="mt-2 text-sm text-mist leading-relaxed">I compared the alternatives with a Kepner-Tregoe decision analysis and chose ultrasonic distance sensors. They report how far away an object is whether or not it’s moving. Mounting them on servos lets each sensor sweep the full side field of view instead of a single fixed line.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">2</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 20, 2025</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Ultrasonic redesign</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">I simulated the new circuit first, then breadboarded two HC-SR04 sensors on 3D-printed servo mounts. The logic maps distance bands to alert rates, so the buzzer and LED speed up as an object closes in.</p>
+              <div class="mt-5 grid grid-cols-3 gap-3">
+                <a href="images/vs-v2-ultrasonic-circuit.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Version 2 circuit: two servos, two HC-SR04 sensors, a buzzer, and an LED."><img src="images/vs-v2-ultrasonic-circuit.jpg" alt="Circuit simulation with a Pico, two servos, two ultrasonic sensors, an LED, and a buzzer." loading="lazy" /><span class="cap">V2 circuit</span></a>
+                <a href="images/vs-v2-breadboard.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Breadboarded version 2 with both sensors on printed servo mounts."><img src="images/vs-v2-breadboard.jpg" alt="Breadboard with a Pico wired to two ultrasonic sensors on servo mounts, a buzzer, and an LED." loading="lazy" /><span class="cap">Breadboard build</span></a>
+                <a href="images/vs-flowchart.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Control logic: distance bands at 30, 20, and 10 cm set the buzzer and LED rate."><img src="images/vs-flowchart.jpg" alt="Flowchart of the sensor loop with distance bands controlling the buzzer and LED." loading="lazy" /><span class="cap">Control logic</span></a>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-blueprint bg-ink font-mono text-xs text-blueprint">3</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 20 – Dec 3, 2025</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Enclosure revisions</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">I designed a finger-jointed plywood enclosure in AutoCAD and laser-cut it at the Northeastern Makerspace. It took several cuts to get the openings right. I sized the buzzer and LED holes slightly under their diameters for a friction fit, cut rectangular openings so the servos could seat and rotate freely, and added a side port for USB power.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <a href="images/vs-lasercut.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="AutoCAD laser-cut layout with finger joints, servo openings, and friction-fit holes."><img src="images/vs-lasercut.jpg" alt="AutoCAD layout of six finger-jointed enclosure panels labeled Left, Right, Bottom, Top, Front, and Back." loading="lazy" /><span class="cap">AutoCAD cut file</span></a>
+                <a href="images/vs-inside.jpg" class="shot aspect-[4/3]" data-gallery="vs" data-caption="Inside the enclosure: the Pico and breadboard, with the servos seated through the top panel."><img src="images/vs-inside.jpg" alt="Inside of the plywood enclosure showing the Pico on a breadboard and wiring to the servos." loading="lazy" /><span class="cap">Inside the enclosure</span></a>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage grid md:grid-cols-[32px_1fr] gap-x-6">
+            <div class="stage-rail relative hidden md:block"><span class="relative z-10 grid place-items-center h-8 w-8 rounded-full border border-measure bg-measure/15 font-mono text-xs text-measure">✓</span></div>
+            <div>
+              <p class="font-mono text-sm text-measure">Dec 3, 2025 · Final showcase</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Fully functional, on deadline</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">Both sensors run at the same time, and the alerts ramp up across the 2–50 cm range. Going from the scrapped motion-sensor concept to this demo took 3 weeks. Next time, I’d replace the tape on the sensor mounts with 3D-printed brackets and route the wiring more cleanly.</p>
+              <div class="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-3xl">
+                <a href="images/vs-front.jpg" class="shot aspect-[4/3] col-span-2 sm:col-span-1" data-gallery="vs" data-caption="Final build, front view."><img src="images/vs-front.jpg" alt="Front view of the finished sensor enclosure." loading="lazy" /><span class="cap">Final, front view</span></a>
+                <a href="https://www.youtube.com/shorts/AcROKL2eSVw" target="_blank" rel="noopener" class="yt shot aspect-[4/3] !cursor-pointer" data-yt="AcROKL2eSVw" data-vertical="true" aria-label="Play the prototype video">
+                  <img src="https://i.ytimg.com/vi/AcROKL2eSVw/hqdefault.jpg" alt="" loading="lazy" />
+                  <span class="absolute inset-0 grid place-items-center bg-ink/30"><span class="grid place-items-center h-12 w-12 rounded-full bg-white/90 text-ink"><i data-lucide="play" class="h-5 w-5"></i></span></span>
+                  <span class="cap">Prototype video</span>
+                </a>
+                <a href="https://www.youtube.com/shorts/TaLlRtZOmOg" target="_blank" rel="noopener" class="yt shot aspect-[4/3] !cursor-pointer" data-yt="TaLlRtZOmOg" data-vertical="true" aria-label="Play the final detection demo video">
+                  <img src="https://i.ytimg.com/vi/TaLlRtZOmOg/hqdefault.jpg" alt="" loading="lazy" />
+                  <span class="absolute inset-0 grid place-items-center bg-ink/30"><span class="grid place-items-center h-12 w-12 rounded-full bg-blueprint text-ink"><i data-lucide="play" class="h-5 w-5"></i></span></span>
+                  <span class="cap">Final detection demo</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Experience</h2>
+        <p class="mt-3 text-mist max-w-xl">Research, diagnostics, and a lot of time solving problems in front of customers.</p>
+        <ol class="timeline relative mt-14 space-y-12">
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-measure ring-4 ring-measure/20" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Jun 2026 – present</p><p class="text-sm text-mist mt-1">Braintree, MA</p></div>
+            <article class="glass lift rounded-2xl p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Parts Sales Associate</h3>
+              <p class="text-blueprint mt-1">AutoZone</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="wrench" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Install and replace standard automotive components across 10+ makes, beating service SLA time targets for batteries, bulbs, windshield wipers, and filters.</span></li>
+                <li class="flex gap-3"><i data-lucide="zap" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Diagnose electrical faults for 10+ customers per day using multimeters, OBD scanners, and battery, alternator, and starter testers to find root causes and recommend the right repair.</span></li>
+                <li class="flex gap-3"><i data-lucide="trending-up" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Advise 50+ customers daily on engine, brake, and suspension systems, matching OEM-spec parts and consistently exceeding monthly sales targets by 35%.</span></li>
+              </ul>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-blueprint ring-4 ring-blueprint/20" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Mar 2026 – present</p><p class="text-sm text-mist mt-1">Boston, MA</p></div>
+            <article class="glass lift rounded-2xl p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Undergraduate Research Assistant</h3>
+              <p class="text-blueprint mt-1">Advanced Materials and Microsystems Laboratory, Northeastern University</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="magnet" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Prepare and mount 8+ sputtered magnetic thin-film samples along easy and hard axes on a GMW-3470 magnet to characterize anisotropy, using stands I designed in CAD and fabricated by 3D printing and waterjet cutting.</span></li>
+                <li class="flex gap-3"><i data-lucide="activity" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Measure magnetostrictive deflection across 5+ film compositions on an optical cantilever rig, generating strain vs. magnetic field graphs for joint analysis with graduate researchers.</span></li>
+                <li class="flex gap-3"><i data-lucide="grid-3x3" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Process angle-resolved FMR measurements in MATLAB across 31 bias-field orientations and 30 field steps, producing colormaps of resonance behavior for 8 devices on a test wafer.</span></li>
+              </ul>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-mist ring-4 ring-white/10" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">May 2026 – Aug 2026</p><p class="font-mono text-sm text-measure">Jun 2023 – Aug 2025</p><p class="text-sm text-mist mt-1">Braintree, MA</p></div>
+            <article class="glass lift rounded-2xl p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Sales Associate</h3>
+              <p class="text-blueprint mt-1">Space Zero</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="settings" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Troubleshot mechanical and technology failures across the store while keeping customers informed, cutting peak-hour wait times by up to 20%.</span></li>
+                <li class="flex gap-3"><i data-lucide="users" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Trained and supported teammates through high-volume shifts of 250+ customers a day, consistently meeting service targets with minimal checkout delays.</span></li>
+                <li class="flex gap-3"><i data-lucide="shield-check" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Mediated 2–4 guest conflicts and behavioral issues per day on the trampoline park floor, enforcing safety regulations while keeping the guest experience positive.</span></li>
+              </ul>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full border-2 border-blueprint bg-ink" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Expected May 2029</p><p class="text-sm text-mist mt-1">Boston, MA</p></div>
+            <article class="glass lift rounded-2xl p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">B.S. in Mechanical Engineering</h3>
+              <p class="text-blueprint mt-1">Northeastern University, GPA 3.93</p>
+              <p class="mt-4 text-mist leading-relaxed">Activities: Northeastern Electric Racing (NER) and the American Society of Mechanical Engineers (ASME).</p>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="py-20 md:py-28 border-t border-line/60">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-[0.85fr_1.15fr] gap-12">
+        <div>
+          <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Let’s build something.</h2>
+          <p class="mt-4 text-mist leading-relaxed max-w-md">I’m looking for co-op, internship, and research opportunities in mechanical design, prototyping, and test. Send a note and I’ll reply within a couple of days.</p>
+          <ul class="mt-8 space-y-3">
+            <li><a href="mailto:lin.jona@northeastern.edu" class="glass lift rounded-xl flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded-lg bg-blueprint/15 text-blueprint"><i data-lucide="mail" class="h-5 w-5"></i></span><span><span class="block text-xs text-mist">Email</span><span class="block">lin.jona@northeastern.edu</span></span></a></li>
+            <li><a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" class="glass lift rounded-xl flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded-lg bg-blueprint/15 text-blueprint"><i data-lucide="linkedin" class="h-5 w-5"></i></span><span><span class="block text-xs text-mist">LinkedIn</span><span class="block">jonathan-lin-315327315</span></span></a></li>
+            <li><a href="https://github.com/Creations111" target="_blank" rel="noopener" class="glass lift rounded-xl flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded-lg bg-blueprint/15 text-blueprint"><i data-lucide="github" class="h-5 w-5"></i></span><span><span class="block text-xs text-mist">GitHub</span><span class="block">Creations111</span></span></a></li>
+            <li><a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="glass lift rounded-xl flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded-lg bg-measure/15 text-measure"><i data-lucide="file-text" class="h-5 w-5"></i></span><span><span class="block text-xs text-mist">Resume</span><span class="block">Jonathan_Lin_Resume.pdf</span></span></a></li>
+          </ul>
+        </div>
+
+        <form id="contact-form" class="glass rounded-3xl p-6 sm:p-8 grid sm:grid-cols-2 gap-5" novalidate>
+          <div>
+            <label for="name" class="block text-sm mb-2">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required class="field w-full rounded-xl px-4 py-3 text-white placeholder:text-mist/50" placeholder="Your name" />
+            <p id="name-error" class="error hidden mt-1.5 text-sm text-red-400" data-for="name">Enter your name.</p>
+          </div>
+          <div>
+            <label for="email" class="block text-sm mb-2">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required class="field w-full rounded-xl px-4 py-3 text-white placeholder:text-mist/50" placeholder="you@company.com" />
+            <p id="email-error" class="error hidden mt-1.5 text-sm text-red-400" data-for="email">Enter a valid email, like name@company.com.</p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="topic" class="block text-sm mb-2">What’s this about?</label>
+            <select id="topic" name="topic" class="field w-full rounded-xl px-4 py-3 text-white">
+              <option>Co-op or internship</option>
+              <option>Research opportunity</option>
+              <option>Project collaboration</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="message" class="block text-sm mb-2">Message</label>
+            <textarea id="message" name="message" rows="5" required maxlength="2000" class="field w-full rounded-xl px-4 py-3 text-white placeholder:text-mist/50 resize-y" placeholder="Tell me about the role or project."></textarea>
+            <div class="flex justify-between mt-1.5">
+              <p id="message-error" class="error hidden text-sm text-red-400" data-for="message">Write at least 10 characters.</p>
+              <span id="char-count" class="ml-auto text-xs text-mist font-mono">0 / 2000</span>
+            </div>
+          </div>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+          <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
+            <button id="submit-btn" type="submit" class="inline-flex items-center gap-2 rounded-xl bg-blueprint px-6 py-3.5 font-semibold text-ink hover:bg-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+              <i data-lucide="send" class="h-4 w-4"></i> <span>Send message</span>
+            </button>
+            <p id="form-status" class="text-sm" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line/60">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-mist">
+      <p>© <span id="year"></span> Jonathan Lin. Designed and built in Boston.</p>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/Creations111" target="_blank" rel="noopener" aria-label="GitHub" class="grid place-items-center h-10 w-10 rounded-lg hover:bg-white/5 hover:text-white transition-colors"><i data-lucide="github" class="h-5 w-5"></i></a>
+        <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid place-items-center h-10 w-10 rounded-lg hover:bg-white/5 hover:text-white transition-colors"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+        <a href="mailto:lin.jona@northeastern.edu" aria-label="Email" class="grid place-items-center h-10 w-10 rounded-lg hover:bg-white/5 hover:text-white transition-colors"><i data-lucide="mail" class="h-5 w-5"></i></a>
+        <a href="#top" aria-label="Back to top" class="grid place-items-center h-10 w-10 rounded-lg hover:bg-white/5 hover:text-white transition-colors"><i data-lucide="arrow-up" class="h-5 w-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="relative m-auto flex flex-col items-center gap-4 p-4" style="padding-top:calc(16px + env(safe-area-inset-top,0px))">
+      <img id="lb-img" src="" alt="" />
+      <p id="lb-cap" class="max-w-2xl text-center text-sm text-mist"></p>
+      <p id="lb-count" class="font-mono text-xs text-mist/70"></p>
+    </div>
+    <button id="lb-close" class="fixed right-4 grid place-items-center h-11 w-11 rounded-full bg-white/10 hover:bg-white/20 text-white" style="top:calc(16px + env(safe-area-inset-top,0px))" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <button id="lb-prev" class="fixed left-3 top-1/2 -translate-y-1/2 grid place-items-center h-11 w-11 rounded-full bg-white/10 hover:bg-white/20 text-white" aria-label="Previous image"><i data-lucide="chevron-left" class="h-5 w-5"></i></button>
+    <button id="lb-next" class="fixed right-3 top-1/2 -translate-y-1/2 grid place-items-center h-11 w-11 rounded-full bg-white/10 hover:bg-white/20 text-white" aria-label="Next image"><i data-lucide="chevron-right" class="h-5 w-5"></i></button>
+  </dialog>
+
+  <script>
+    /* ===================== CONFIG ===================== */
+    // Optional: a Formspree endpoint (https://formspree.io) to receive messages directly.
+    // Left empty, the form opens the visitor's email app with the message filled in.
+    const FORM_ENDPOINT = "";
+    const CONTACT_EMAIL = "lin.jona@northeastern.edu";
+
+    // Replace `code` with each exact repository URL when you have it.
+    const PROJECTS = [
+      {
+        title: "Fraction Frenzy",
+        context: "Cornerstone of Engineering 2, Spring 2026",
+        categories: ["cad", "embedded"],
+        image: "images/cv-final.jpg",
+        description: "A 14″ × 14″ × 4″ conveyor-belt board game that helps 5th graders practice adding fractions, moving each team’s piece across 12 steps on sandpaper-wrapped, 3D-printed dowels. As CAD lead, I took the drivetrain through 7 SolidWorks iterations to stabilize the motor mounts and cut drift by 5 mm.",
+        stats: [["7", "CAD iterations"], ["−5 mm", "belt drift"], ["8/10", "from 15 users"]],
+        tech: ["SolidWorks", "3D printing", "Drivetrain design", "Laser cutting", "MicroPython"],
+        caseStudy: "#fraction-frenzy",
+        code: "https://github.com/Creations111?tab=repositories",
+        demo: "https://www.youtube.com/watch?v=qRW1JOPw_Ok"
+      },
+      {
+        title: "Vehicle Side-Proximity Sensor",
+        context: "Cornerstone of Engineering 1, Fall 2025",
+        categories: ["embedded", "cad"],
+        image: "images/vs-final.jpg",
+        description: "A scaled-down blind-zone sensor with two servo-swept ultrasonic sensors on a Raspberry Pi Pico, driving a buzzer and LED that speed up as an object closes from 50 cm to 2 cm. I scrapped a motion-sensor prototype that couldn’t detect stationary curbs and rebuilt the system in 3 weeks.",
+        stats: [["2–50 cm", "sensing range"], ["2", "swept sensors"], ["3 wks", "full rebuild"]],
+        tech: ["MicroPython", "Raspberry Pi Pico", "Ultrasonic sensors", "AutoCAD", "Kepner-Tregoe"],
+        caseStudy: "#proximity-sensor",
+        code: "https://github.com/Creations111?tab=repositories",
+        demo: "https://www.youtube.com/shorts/TaLlRtZOmOg"
+      },
+      {
+        title: "Thin-Film FMR and Magnetostriction",
+        context: "Advanced Materials and Microsystems Lab, 2026",
+        categories: ["data", "cad"],
+        image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=70",
+        description: "Research characterizing sputtered magnetic thin films, using sample stands I designed in CAD and fabricated by 3D printing and waterjet cutting. I process angle-resolved FMR data in MATLAB across 31 bias-field orientations and 30 field steps, mapping resonance behavior for 8 devices on a test wafer.",
+        stats: [["31 × 30", "FMR sweep grid"], ["8", "devices mapped"], ["5+", "film compositions"]],
+        tech: ["MATLAB", "SolidWorks", "Waterjet", "FMR", "Magnetostriction"],
+        caseStudy: "",
+        code: "",
+        demo: ""
+      }
+    ];
+
+    /* ===================== Helpers ===================== */
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const esc = (str) => String(str).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const icons = () => { if (window.lucide) window.lucide.createIcons(); };
+
+    /* ===================== Projects ===================== */
+    function renderProjects() {
+      $("#project-grid").innerHTML = PROJECTS.map((p) => {
+        const btns = [];
+        if (p.caseStudy) btns.push(`<a href="${p.caseStudy}" class="inline-flex items-center gap-2 rounded-lg bg-blueprint px-3.5 py-2 text-sm font-semibold text-ink hover:bg-white transition-colors"><i data-lucide="layers" class="h-4 w-4"></i> Case study</a>`);
+        if (p.demo) btns.push(`<a href="${esc(p.demo)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-line px-3.5 py-2 text-sm hover:border-blueprint/60 transition-colors"><i data-lucide="play-circle" class="h-4 w-4"></i> Live demo</a>`);
+        if (p.code) btns.push(`<a href="${esc(p.code)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-line px-3.5 py-2 text-sm hover:border-blueprint/60 transition-colors"><i data-lucide="github" class="h-4 w-4"></i> View code</a>`);
+        if (!p.code && !p.caseStudy) btns.push(`<span class="inline-flex items-center gap-2 rounded-lg border border-dashed border-line px-3.5 py-2 text-sm text-mist"><i data-lucide="lock" class="h-4 w-4"></i> Lab work, not public</span>`);
+        return `
+          <article class="project-card glass lift rounded-2xl overflow-hidden flex flex-col" data-categories="${p.categories.join(" ")}">
+            <div class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-blueprint/25 via-panel to-measure/10">
+              <img src="${esc(p.image)}" alt="" loading="lazy" class="cover-img absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+              <div class="absolute inset-0 bg-gradient-to-t from-panel via-panel/10 to-transparent"></div>
+              <p class="absolute left-4 bottom-3 text-xs text-white/90 font-mono">${esc(p.context)}</p>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="font-display font-semibold text-xl leading-snug">${esc(p.title)}</h3>
+              <p class="mt-3 text-[15px] text-mist leading-relaxed">${esc(p.description)}</p>
+              <dl class="mt-5 grid grid-cols-3 gap-2">
+                ${p.stats.map(([v, l]) => `<div class="rounded-lg border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">${esc(l)}</dt><dd class="font-display font-bold text-measure text-base leading-tight">${esc(v)}</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">${esc(l)}</dd></div>`).join("")}
+              </dl>
+              <ul class="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies used">
+                ${p.tech.map((t) => `<li class="rounded-md bg-white/5 border border-white/10 px-2 py-0.5 text-xs">${esc(t)}</li>`).join("")}
+              </ul>
+              <div class="mt-auto pt-6 flex flex-wrap gap-2">${btns.join("")}</div>
+            </div>
+          </article>`;
+      }).join("");
+      icons();
+    }
+
+    function applyFilter(filter) {
+      let visible = 0;
+      $$(".project-card").forEach((card) => {
+        const match = filter === "all" || card.dataset.categories.split(" ").includes(filter);
+        if (match) visible++;
+        if (reduceMotion) { card.classList.toggle("is-hidden", !match); return; }
+        if (match && card.classList.contains("is-hidden")) {
+          card.classList.remove("is-hidden");
+          card.classList.add("is-entering");
+          requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove("is-entering")));
+        } else if (!match && !card.classList.contains("is-hidden")) {
+          card.classList.add("is-leaving");
+          setTimeout(() => { card.classList.add("is-hidden"); card.classList.remove("is-leaving"); }, 250);
+        }
+      });
+      $("#project-empty").classList.toggle("hidden", visible !== 0);
+    }
+
+    function initFilters() {
+      $$(".filter-btn").forEach((btn) => btn.addEventListener("click", () => {
+        $$(".filter-btn").forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        applyFilter(btn.dataset.filter);
+      }));
+    }
+
+    /* ===================== Navigation ===================== */
+    function initNav() {
+      const header = $("#site-header"), btn = $("#menu-btn"), menu = $("#mobile-menu");
+      const setOpen = (open) => {
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menu.classList.toggle("open", open);
+        header.classList.toggle("scrolled", open || window.scrollY > 10);
+      };
+      btn.addEventListener("click", () => setOpen(btn.getAttribute("aria-expanded") !== "true"));
+      $$(".mobile-link").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("#lightbox").open) setOpen(false); });
+      window.addEventListener("resize", () => { if (window.innerWidth >= 768) setOpen(false); });
+      const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 10 || menu.classList.contains("open"));
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Highlight the current section; case studies count as "Projects"
+      const links = $$(".nav-link");
+      const map = { about: "about", projects: "projects", "fraction-frenzy": "projects", "proximity-sensor": "projects", experience: "experience", contact: "contact" };
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+          if (en.isIntersecting) links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + map[en.target.id]));
+        }), { rootMargin: "-45% 0px -50% 0px" });
+        Object.keys(map).forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+      }
+    }
+
+    /* ===================== Lightbox ===================== */
+    function initLightbox() {
+      const dlg = $("#lightbox"), img = $("#lb-img"), cap = $("#lb-cap"), count = $("#lb-count");
+      let items = [], idx = 0;
+      const show = () => {
+        const a = items[idx];
+        img.src = a.getAttribute("href");
+        img.alt = a.querySelector("img")?.alt || "";
+        cap.textContent = a.dataset.caption || "";
+        count.textContent = items.length > 1 ? `${idx + 1} / ${items.length}` : "";
+        $("#lb-prev").hidden = $("#lb-next").hidden = items.length < 2;
+      };
+      $$("a.shot[data-gallery]").forEach((a) => a.addEventListener("click", (e) => {
+        e.preventDefault();
+        items = $$(`a.shot[data-gallery="${a.dataset.gallery}"]`);
+        idx = items.indexOf(a);
+        show();
+        dlg.showModal();
+      }));
+      const step = (d) => { idx = (idx + d + items.length) % items.length; show(); };
+      $("#lb-prev").addEventListener("click", () => step(-1));
+      $("#lb-next").addEventListener("click", () => step(1));
+      $("#lb-close").addEventListener("click", () => dlg.close());
+      dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target === dlg.firstElementChild) dlg.close(); });
+      dlg.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+      // Swipe on touch screens
+      let x0 = null;
+      dlg.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      dlg.addEventListener("touchend", (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+        x0 = null;
+      });
+    }
+
+    /* ===================== YouTube (load player on click) ===================== */
+    function initVideos() {
+      $$("a.yt[data-yt]").forEach((a) => a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = a.dataset.yt;
+        const wrap = document.createElement("div");
+        wrap.className = a.className.replace(/\byt\b|\bshot\b/g, "") + " relative overflow-hidden rounded-[14px] border border-line bg-black";
+        if (a.dataset.vertical) wrap.style.aspectRatio = "9 / 16";
+        wrap.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0" title="Project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        a.replaceWith(wrap);
+      }));
+    }
+
+    /* ===================== Contact form ===================== */
+    function initForm() {
+      const form = $("#contact-form"), status = $("#form-status"), submitBtn = $("#submit-btn"), msg = $("#message"), counter = $("#char-count");
+      msg.addEventListener("input", () => { counter.textContent = `${msg.value.length} / 2000`; });
+      const rules = {
+        name: (v) => v.trim().length > 0,
+        email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+        message: (v) => v.trim().length >= 10
+      };
+      const mark = (f, bad) => {
+        const input = form.elements[f];
+        input.setAttribute("aria-invalid", String(bad));
+        $(`#${f}-error`).classList.toggle("hidden", !bad);
+        if (bad) input.setAttribute("aria-describedby", `${f}-error`); else input.removeAttribute("aria-describedby");
+      };
+      Object.keys(rules).forEach((f) => {
+        form.elements[f].addEventListener("blur", (e) => { if (e.target.value) mark(f, !rules[f](e.target.value)); });
+        form.elements[f].addEventListener("input", (e) => { if (e.target.getAttribute("aria-invalid") === "true" && rules[f](e.target.value)) mark(f, false); });
+      });
+      const say = (t, tone) => { status.textContent = t; status.className = "text-sm " + (tone === "ok" ? "text-measure" : tone === "err" ? "text-red-400" : "text-mist"); };
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (form.elements._gotcha.value) return;
+        let first = null;
+        Object.keys(rules).forEach((f) => { const ok = rules[f](form.elements[f].value); mark(f, !ok); if (!ok && !first) first = form.elements[f]; });
+        if (first) { first.focus(); say("Fix the highlighted fields, then send again.", "err"); return; }
+        const data = { name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), topic: form.elements.topic.value, message: form.elements.message.value.trim() };
+
+        if (!FORM_ENDPOINT) {
+          const subject = encodeURIComponent(`${data.topic}: message from ${data.name}`);
+          const body = encodeURIComponent(`${data.message}\n\n${data.name}\n${data.email}`);
+          window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+          say("Your email app should open with the message filled in.", "ok");
+          return;
+        }
+        submitBtn.disabled = true; submitBtn.querySelector("span").textContent = "Sending…"; say("", "");
+        try {
+          const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset(); counter.textContent = "0 / 2000";
+          say("Message sent. Thanks, I’ll be in touch soon.", "ok");
+        } catch {
+          say(`The message didn’t go through. Email me directly at ${CONTACT_EMAIL}.`, "err");
+        } finally {
+          submitBtn.disabled = false; submitBtn.querySelector("span").textContent = "Send message";
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      $("#year").textContent = new Date().getFullYear();
+      renderProjects();
+      initFilters();
+      initNav();
+      initLightbox();
+      initVideos();
+      initForm();
+      icons();
+    });
+  </script>
+</body>
+</html>
