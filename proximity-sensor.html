@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vehicle side-proximity sensor — Jonathan Lin</title>
+  <meta name="description" content="Two sweeping ultrasonic sensors that warn faster as objects get closer. Built in 3 weeks for $26.30." />
+  <meta property="og:title" content="Vehicle side-proximity sensor — Jonathan Lin" />
+  <meta property="og:description" content="Two sweeping ultrasonic sensors that warn faster as objects get closer. Built in 3 weeks for $26.30." />
+  <meta property="og:image" content="https://creations111.github.io/images/vs-final.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>" />
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    const v = (n) => `rgb(var(--${n}) / <alpha-value>)`;
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Archivo", "Helvetica Neue", "Arial", "sans-serif"],
+            sans: ['"IBM Plex Sans"', "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+            mono: ['"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+          },
+          colors: { ink: v("ink"), panel: v("panel"), line: v("line"), blueprint: v("blueprint"), measure: v("measure"), mist: v("mist"), fg: v("fg"), warn: v("warn") }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-sans drafting-grid min-h-screen">
+  <div class="glow fixed inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blueprint focus:text-ink focus:px-4 focus:py-2">Skip to content</a>
+
+  <!-- ================= NAV ================= -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 border-b border-transparent backdrop-blur-xl">
+    <nav class="mx-auto max-w-6xl px-5 sm:px-8 h-[72px] flex items-center justify-between" aria-label="Primary">
+      <a href="index.html" class="flex items-center gap-3 group" aria-label="Jonathan Lin, back to top">
+        <span class="grid place-items-center h-9 w-9 rounded border border-blueprint/50 bg-blueprint/10 font-display display-wide font-bold text-sm text-blueprint group-hover:bg-blueprint group-hover:text-ink transition-colors">JL</span>
+        <span class="font-display font-semibold tracking-tight text-[15px] hidden sm:block">Jonathan Lin</span>
+      </a>
+      <div class="flex items-center gap-2 md:gap-8">
+        <div class="hidden md:flex items-center gap-8 text-sm text-mist">
+          <a href="index.html#about" class="nav-link hover:text-fg transition-colors">About</a>
+          <a href="index.html#projects" class="nav-link active hover:text-fg transition-colors">Projects</a>
+          <a href="index.html#experience" class="nav-link hover:text-fg transition-colors">Experience</a>
+          <a href="index.html#contact" class="nav-link hover:text-fg transition-colors">Contact</a>
+        </div>
+        <button id="theme-btn" class="grid place-items-center h-10 w-10 rounded border border-line text-mist hover:text-fg hover:border-blueprint transition-colors" aria-label="Switch to light mode" title="Switch light or dark mode">
+          <i data-lucide="moon" class="theme-moon h-4 w-4"></i><i data-lucide="sun" class="theme-sun h-4 w-4"></i>
+        </button>
+        <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="hidden md:inline-flex btn border border-measure/50 text-measure hover:bg-measure hover:text-ink"><i data-lucide="file-text" class="h-4 w-4"></i> Resume</a>
+        <button id="menu-btn" class="burger md:hidden p-2 -mr-2 text-fg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden">
+      <div>
+        <div class="panel mx-4 mb-4 p-3 flex flex-col text-base">
+          <a href="index.html#about" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">About</a>
+          <a href="index.html#projects" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Projects</a>
+          <a href="fraction-frenzy.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Fraction Frenzy</a>
+          <a href="research.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Research fixtures</a>
+          <a href="proximity-sensor.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Proximity sensor</a>
+          <a href="index.html#experience" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Experience</a>
+          <a href="index.html#contact" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Contact</a>
+          <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="mobile-link mt-2 rounded px-4 py-3 bg-measure text-ink font-medium flex items-center gap-2"><i data-lucide="file-text" class="h-4 w-4"></i> Open resume (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= CASE STUDY 03: SENSOR ================= -->
+    <section id="proximity-sensor" class="case pt-[calc(72px+env(safe-area-inset-top,0px))] pb-20 md:pb-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <a href="index.html#projects" class="back-link mt-8 md:mt-12 inline-flex items-center gap-1.5 text-sm text-mist hover:text-fg transition-colors"><i data-lucide="arrow-left" class="h-4 w-4"></i> All projects</a>
+        <div class="mt-6"></div>
+        <p class="font-mono text-sm text-measure">Case study 03 · Cornerstone of Engineering 1 · Fall 2025 · Solo project</p>
+        <h2 class="mt-3 font-display display-wide font-bold text-3xl md:text-[3rem] leading-[1.05] tracking-tight max-w-3xl">Vehicle side-proximity sensor</h2>
+
+        <div class="mt-10 grid lg:grid-cols-[1fr_1.2fr] gap-8 items-start">
+          <figure class="fig max-w-md">
+            <a href="images/vs-final.jpg" class="zoom aspect-[3/4]" data-gallery="vs" data-caption="Final build: two servo-swept ultrasonic sensors, a buzzer, and an LED on a laser-cut plywood enclosure."><img src="images/vs-final.jpg" alt="Laser-cut plywood box with two ultrasonic sensors on servos, a red LED, and a buzzer." loading="lazy" /></a>
+            <figcaption>Final build.</figcaption>
+          </figure>
+          <div class="space-y-5">
+            <dl class="grid grid-cols-2 gap-3">
+              <div class="panel p-4"><dt class="text-xs text-mist">Detection range</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">2–50 cm</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Sweep per sensor</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">180°</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Full rebuild</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">3 weeks</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Bill of materials</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">$26.30</dd></div>
+            </dl>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.youtube.com/shorts/TaLlRtZOmOg" target="_blank" rel="noopener" class="btn btn-primary"><i data-lucide="play-circle" class="h-4 w-4"></i> Watch final demo</a>
+              <a href="https://github.com/Creations111?tab=repositories" target="_blank" rel="noopener" class="btn btn-ghost"><i data-lucide="github" class="h-4 w-4"></i> View code</a>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sec"><span class="num">01</span>Problem</h3>
+        <p class="lead mt-5">A lot of cars have parking sensors in the front and back but nothing on the sides, which is where a cyclist next to a turning car can get missed. I built a small-scale side sensor that beeps and flashes faster as something gets closer. It had to catch objects whether they’re moving or not, stay quiet past a set distance, run on USB-C, and stay cheap.</p>
+
+        <h3 class="sec"><span class="num">02</span>Concept selection</h3>
+        <p class="lead mt-5">I compared sensors with a Kepner-Tregoe analysis. A PIR sensor only picks up heat and motion, so it can’t see a curb. An ultrasonic sensor can.</p>
+        <div class="tbl-wrap mt-6"><table class="tbl">
+          <thead><tr><th>Option</th><th>How it senses</th><th>Limitation</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>PIR motion sensor</td><td>Passively detects changes in infrared (heat)</td><td>Blind to stationary, non-heat-emitting objects such as curbs</td><td><span class="tag no">Scrapped</span></td></tr>
+            <tr class="pick"><td>Ultrasonic sensor (HC-SR04) on a servo</td><td>Times the echo of a sound pulse to measure distance</td><td>Narrow beam, solved by sweeping it on a servo</td><td><span class="tag ok">Selected</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <h3 class="sec"><span class="num">03</span>Analysis</h3>
+        <div class="mt-6 grid md:grid-cols-2 gap-5">
+          <div class="panel p-5">
+            <h4 class="font-display font-semibold">Echo timing</h4>
+            <p class="mt-3"><span class="eq">d = v × t ÷ 2</span></p>
+            <p class="mt-3 text-sm text-mist leading-relaxed">With sound at 343 m/s, an object 50 cm away returns its echo in about 2.9 ms, and one at 2 cm in about 0.12 ms. The 2 cm lower limit is roughly the HC-SR04’s minimum sensing distance.</p>
+          </div>
+          <div class="panel p-5">
+            <h4 class="font-display font-semibold">Why each sensor sweeps</h4>
+            <p class="mt-3"><span class="eq">w = 2 × d × tan(15° ÷ 2)</span></p>
+            <p class="mt-3 text-sm text-mist leading-relaxed">An HC-SR04 sees a cone only about 15° wide, roughly 13 cm across at 50 cm. A fixed sensor would miss most of the car’s side, so I put each one on a servo that sweeps 180°.</p>
+          </div>
+        </div>
+
+        <h3 class="sec"><span class="num">04</span>Design</h3>
+        <div class="mt-6 grid md:grid-cols-3 gap-4">
+          <div class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Graded alerts</strong>The closer an object gets, the faster the buzzer beeps and the LED flashes. Past the threshold, nothing goes off.</div>
+          <div class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Friction-fit components</strong>I sized the buzzer and LED holes slightly under their diameters, so the laser-cut plywood grips them without fasteners.</div>
+          <div class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Servo seating and power</strong>Rectangular openings in the top panel let the servos seat and rotate freely, and a side opening gives access to the USB-C port.</div>
+        </div>
+
+        <h3 class="sec"><span class="num">05</span>Build, test, revise</h3>
+        <ol class="mt-10 space-y-10">
+          <li class="stage">
+            <span class="dot fail">1</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 9, 2025 · Scrapped</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Motion-sensor prototype</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>A PIR motion sensor and a buzzer in a cardboard box.</dd>
+                <dt>Problem</dt><dd>It worked on the bench, but stayed silent next to stationary obstacles.</dd>
+                <dt>Root cause</dt><dd>A motion sensor only reacts to things that move or give off heat. A curb does neither.</dd>
+                <dt>Change</dt><dd>Switch to ultrasonic distance sensing, chosen with a Kepner-Tregoe analysis.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <figure class="fig"><a href="images/vs-v1-motion-proto.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Version 1: PIR motion sensor and buzzer in a cardboard box."><img src="images/vs-v1-motion-proto.jpg" alt="Duct-taped cardboard box with a PIR motion sensor on top." loading="lazy" /></a><figcaption>V1 cardboard prototype.</figcaption></figure>
+                <figure class="fig"><a href="images/vs-v1-motion-circuit.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Version 1 circuit: Pico, PIR sensor, buzzer, and LED."><img src="images/vs-v1-motion-circuit.jpg" alt="Circuit simulation with a Pico and a PIR motion sensor." loading="lazy" /></a><figcaption>V1 circuit.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+          <li class="stage">
+            <span class="dot">2</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 20, 2025</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Ultrasonic redesign</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>I simulated the new circuit, then breadboarded two HC-SR04 sensors on 3D-printed servo mounts.</dd>
+                <dt>Result</dt><dd>Both sensors swept 180° and reported distance to stationary and moving objects.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <figure class="fig"><a href="images/vs-v2-ultrasonic-circuit.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Version 2 circuit: two servos, two HC-SR04 sensors, a buzzer, and an LED."><img src="images/vs-v2-ultrasonic-circuit.jpg" alt="Circuit simulation with two servos and two ultrasonic sensors." loading="lazy" /></a><figcaption>V2 circuit.</figcaption></figure>
+                <figure class="fig"><a href="images/vs-v2-breadboard.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Breadboarded version 2 with both sensors on printed servo mounts."><img src="images/vs-v2-breadboard.jpg" alt="Breadboard with a Pico wired to two ultrasonic sensors on servos." loading="lazy" /></a><figcaption>Breadboard build.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+          <li class="stage">
+            <span class="dot">3</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Nov 20 – Dec 3, 2025</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Enclosure revisions</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>A finger-jointed plywood enclosure designed in AutoCAD and laser-cut at the Northeastern Makerspace.</dd>
+                <dt>Problem</dt><dd>The component holes and servo openings came out the wrong size.</dd>
+                <dt>Change</dt><dd>I recut the panels over several iterations until the friction fits and servo openings were right.</dd>
+                <dt>Lesson</dt><dd>Cut a small test piece before cutting the whole enclosure.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <figure class="fig"><a href="images/vs-lasercut.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="AutoCAD laser-cut layout with finger joints, servo openings, and friction-fit holes."><img src="images/vs-lasercut.jpg" alt="AutoCAD layout of six finger-jointed panels." loading="lazy" /></a><figcaption>AutoCAD cut file.</figcaption></figure>
+                <figure class="fig"><a href="images/vs-inside.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Inside the enclosure: the Pico and breadboard, with the servos seated through the top panel."><img src="images/vs-inside.jpg" alt="Inside of the enclosure showing the Pico and wiring." loading="lazy" /></a><figcaption>Inside the enclosure.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+          <li class="stage">
+            <span class="dot done">✓</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Dec 3, 2025 · Final showcase</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Fully functional, on deadline</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">Both sensors sweep and alert at the same time across 2–50 cm. This was 3 weeks after I scrapped the first concept.</p>
+              <div class="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-3xl">
+                <figure class="fig col-span-2 sm:col-span-1"><a href="images/vs-front.jpg" class="zoom aspect-[4/3]" data-gallery="vs" data-caption="Final build, front view."><img src="images/vs-front.jpg" alt="Front view of the finished sensor enclosure." loading="lazy" /></a><figcaption>Final, front view.</figcaption></figure>
+                <figure class="fig"><a href="https://www.youtube.com/shorts/AcROKL2eSVw" target="_blank" rel="noopener" class="yt zoom aspect-[4/3] relative" data-yt="AcROKL2eSVw" data-vertical="true" aria-label="Play the prototype video"><img src="https://i.ytimg.com/vi/AcROKL2eSVw/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span class="grid place-items-center h-12 w-12 rounded-full bg-fg text-ink"><i data-lucide="play" class="h-5 w-5"></i></span></span></a><figcaption>Prototype video.</figcaption></figure>
+                <figure class="fig"><a href="https://www.youtube.com/shorts/TaLlRtZOmOg" target="_blank" rel="noopener" class="yt zoom aspect-[4/3] relative" data-yt="TaLlRtZOmOg" data-vertical="true" aria-label="Play the final detection demo video"><img src="https://i.ytimg.com/vi/TaLlRtZOmOg/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span class="grid place-items-center h-12 w-12 rounded-full bg-blueprint text-ink"><i data-lucide="play" class="h-5 w-5"></i></span></span></a><figcaption>Final detection demo.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="sec"><span class="num">06</span>Results and lessons</h3>
+        <div class="mt-6 grid lg:grid-cols-2 gap-6 items-start">
+          <div class="tbl-wrap"><table class="tbl" style="min-width:380px">
+            <thead><tr><th>Requirement</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Detects moving and stationary objects on both sides</td><td><span class="tag ok">Met</span></td></tr>
+              <tr><td>Alerts speed up as objects get closer (2–50 cm)</td><td><span class="tag ok">Met</span></td></tr>
+              <tr><td>No alert beyond the threshold</td><td><span class="tag ok">Met</span></td></tr>
+              <tr><td>USB-C powered, car-shaped enclosure</td><td><span class="tag ok">Met</span></td></tr>
+              <tr><td>Clean, secure mounting</td><td><span class="tag mid">Partly met</span></td></tr>
+            </tbody>
+          </table></div>
+          <details class="pkg panel">
+            <summary class="flex items-center justify-between gap-4 p-5"><span><span class="font-display font-semibold">Bill of materials</span> <span class="text-mist text-sm">· $26.30 total</span></span><i data-lucide="chevron-down" class="chev h-5 w-5 text-mist transition-transform"></i></summary>
+            <div class="px-5 pb-5">
+          <div class="tbl-wrap"><table class="tbl" style="min-width:380px">
+            <thead><tr><th>Component</th><th>Qty</th><th>Cost</th></tr></thead>
+            <tbody>
+              <tr><td>Raspberry Pi Pico</td><td>1</td><td class="font-mono">$6.00</td></tr>
+              <tr><td>HC-SR04 ultrasonic sensors</td><td>2</td><td class="font-mono">$6.00</td></tr>
+              <tr><td>Laser-cut plywood enclosure</td><td>1</td><td class="font-mono">$6.00</td></tr>
+              <tr><td>Breadboard</td><td>1</td><td class="font-mono">$5.00</td></tr>
+              <tr><td>3D-printed sensor mounts</td><td>2</td><td class="font-mono">$2.00</td></tr>
+              <tr><td>Buzzer and LED</td><td>1 each</td><td class="font-mono">$1.30</td></tr>
+              <tr><td><strong>Total</strong></td><td></td><td class="font-mono"><strong>$26.30</strong></td></tr>
+            </tbody>
+          </table></div>
+            </div>
+          </details>
+        </div>
+        <ul class="mt-6 grid md:grid-cols-3 gap-4">
+          <li class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Ditch the tape</strong>Next time I’d hold the sensors with 3D-printed brackets instead of tape and route the wires cleanly.</li>
+          <li class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Scrap bad ideas early</strong>Dropping the PIR sensor early left me enough time to rebuild with ultrasonic sensors.</li>
+          <li class="panel p-5 text-sm text-mist leading-relaxed"><strong class="text-fg block mb-1">Ethics and materials</strong>The goal was preventing side collisions. Plywood can be recycled into mulch, and the Pico depends on materials such as silicon, gallium, and germanium, whose mining raises labor concerns.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 grid sm:grid-cols-2 gap-4">
+        <a href="index.html#projects" class="panel lift p-6 flex items-center gap-3"><i data-lucide="arrow-left" class="h-5 w-5 text-mist"></i><span><span class="block text-xs text-mist">Back to</span><span class="font-display font-semibold text-lg">All projects</span></span></a>
+        <a href="fraction-frenzy.html" class="panel lift p-6 flex items-center justify-between gap-3 sm:text-right"><span class="sm:ml-auto"><span class="block text-xs text-mist">Next project</span><span class="font-display font-semibold text-lg">Fraction Frenzy</span></span><i data-lucide="arrow-right" class="h-5 w-5 text-mist"></i></a>
+      </div>
+      <p class="mx-auto max-w-6xl px-5 sm:px-8 pb-12 text-mist">Questions about this project? Email me at <a class="text-blueprint hover:underline" href="mailto:lin.jona@northeastern.edu">lin.jona@northeastern.edu</a>.</p>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-mist">
+      <p>© <span id="year"></span> Jonathan Lin</p>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/Creations111" target="_blank" rel="noopener" aria-label="GitHub" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="github" class="h-5 w-5"></i></a>
+        <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+        <a href="mailto:lin.jona@northeastern.edu" aria-label="Email" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="mail" class="h-5 w-5"></i></a>
+        <a href="#main" aria-label="Back to top" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="arrow-up" class="h-5 w-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="relative m-auto flex flex-col items-center gap-3 p-4" style="padding-top:calc(16px + env(safe-area-inset-top,0px))">
+      <img id="lb-img" src="" alt="" />
+      <p id="lb-cap" class="max-w-2xl text-center text-sm text-[#c7cede]"></p>
+      <p id="lb-count" class="font-mono text-xs text-[#8e98b0]"></p>
+    </div>
+    <button id="lb-close" class="lb-btn right-4" style="top:calc(16px + env(safe-area-inset-top,0px))" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <button id="lb-prev" class="lb-btn left-3 top-1/2 -translate-y-1/2" aria-label="Previous image"><i data-lucide="chevron-left" class="h-5 w-5"></i></button>
+    <button id="lb-next" class="lb-btn right-3 top-1/2 -translate-y-1/2" aria-label="Next image"><i data-lucide="chevron-right" class="h-5 w-5"></i></button>
+  </dialog>
+
+  <script src="site.js"></script>
+</body>
+</html>

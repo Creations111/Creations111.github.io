@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Jonathan Lin — Mechanical Engineering Portfolio</title>
+  <meta name="description" content="Jonathan Lin, mechanical engineering student at Northeastern University. Design iterations, SolidWorks drawings, fixtures, and electromagnets." />
+  <meta property="og:title" content="Jonathan Lin — Mechanical Engineering Portfolio" />
+  <meta property="og:description" content="Jonathan Lin, mechanical engineering student at Northeastern University. Design iterations, SolidWorks drawings, fixtures, and electromagnets." />
+  <meta property="og:image" content="https://creations111.github.io/images/cv-final.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>" />
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    const v = (n) => `rgb(var(--${n}) / <alpha-value>)`;
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Archivo", "Helvetica Neue", "Arial", "sans-serif"],
+            sans: ['"IBM Plex Sans"', "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+            mono: ['"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+          },
+          colors: { ink: v("ink"), panel: v("panel"), line: v("line"), blueprint: v("blueprint"), measure: v("measure"), mist: v("mist"), fg: v("fg"), warn: v("warn") }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-sans drafting-grid min-h-screen">
+  <div class="glow fixed inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blueprint focus:text-ink focus:px-4 focus:py-2">Skip to content</a>
+
+  <!-- ================= NAV ================= -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 border-b border-transparent backdrop-blur-xl">
+    <nav class="mx-auto max-w-6xl px-5 sm:px-8 h-[72px] flex items-center justify-between" aria-label="Primary">
+      <a href="#top" class="flex items-center gap-3 group" aria-label="Jonathan Lin, back to top">
+        <span class="grid place-items-center h-9 w-9 rounded border border-blueprint/50 bg-blueprint/10 font-display display-wide font-bold text-sm text-blueprint group-hover:bg-blueprint group-hover:text-ink transition-colors">JL</span>
+        <span class="font-display font-semibold tracking-tight text-[15px] hidden sm:block">Jonathan Lin</span>
+      </a>
+      <div class="flex items-center gap-2 md:gap-8">
+        <div class="hidden md:flex items-center gap-8 text-sm text-mist">
+          <a href="#about" class="nav-link hover:text-fg transition-colors">About</a>
+          <a href="#projects" class="nav-link hover:text-fg transition-colors">Projects</a>
+          <a href="#experience" class="nav-link hover:text-fg transition-colors">Experience</a>
+          <a href="#contact" class="nav-link hover:text-fg transition-colors">Contact</a>
+        </div>
+        <button id="theme-btn" class="grid place-items-center h-10 w-10 rounded border border-line text-mist hover:text-fg hover:border-blueprint transition-colors" aria-label="Switch to light mode" title="Switch light or dark mode">
+          <i data-lucide="moon" class="theme-moon h-4 w-4"></i><i data-lucide="sun" class="theme-sun h-4 w-4"></i>
+        </button>
+        <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="hidden md:inline-flex btn border border-measure/50 text-measure hover:bg-measure hover:text-ink"><i data-lucide="file-text" class="h-4 w-4"></i> Resume</a>
+        <button id="menu-btn" class="burger md:hidden p-2 -mr-2 text-fg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden">
+      <div>
+        <div class="panel mx-4 mb-4 p-3 flex flex-col text-base">
+          <a href="#about" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">About</a>
+          <a href="#projects" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Projects</a>
+          <a href="fraction-frenzy.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Fraction Frenzy</a>
+          <a href="research.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Research fixtures</a>
+          <a href="proximity-sensor.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Proximity sensor</a>
+          <a href="#experience" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Experience</a>
+          <a href="#contact" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Contact</a>
+          <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="mobile-link mt-2 rounded px-4 py-3 bg-measure text-ink font-medium flex items-center gap-2"><i data-lucide="file-text" class="h-4 w-4"></i> Open resume (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section id="top" class="relative pt-[calc(72px+env(safe-area-inset-top,0px))]">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 pb-20 md:pt-24 md:pb-28 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-10 items-center">
+        <div>
+          <p class="inline-flex items-center gap-2 rounded-full border border-measure/40 bg-measure/10 px-3 py-1 text-[13px] text-measure">
+            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-measure opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-measure"></span></span>
+            Open to co-op and research roles
+          </p>
+          <h1 class="mt-6 font-display display-wide font-extrabold tracking-[-0.02em] leading-[0.98] text-[clamp(2.6rem,6.4vw,4.75rem)]">I design the part, build it, and measure what it does.</h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-mist">Mechanical engineering student at Northeastern (3.93 GPA). I model parts in SolidWorks, build them, test them, and keep changing them until they work. In my research lab, I make the fixtures and electromagnets we use to test magnetic thin films.</p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#projects" class="btn btn-primary px-6 py-3.5">View projects <i data-lucide="arrow-down" class="h-4 w-4"></i></a>
+            <a href="https://github.com/Creations111" target="_blank" rel="noopener" class="btn btn-ghost panel py-3.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
+            <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" class="btn btn-ghost panel py-3.5"><i data-lucide="linkedin" class="h-4 w-4"></i> LinkedIn</a>
+            <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost panel py-3.5"><i data-lucide="file-text" class="h-4 w-4"></i> Resume</a>
+          </div>
+        </div>
+
+        <figure class="panel p-4 sm:p-6">
+          <figcaption class="sr-only">Technical drawing of Fraction Frenzy: a 14 by 14 by 4 inch board with two conveyor belts, a 12-step track beside each belt, a central LED spinner, and two LCD screens.</figcaption>
+          <svg viewBox="0 0 520 420" class="w-full h-auto" aria-hidden="true">
+            <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ms"/></marker></defs>
+            <rect class="draw s-bp" x="60" y="40" width="300" height="300" rx="4" fill="none" stroke-width="2"/>
+            <g class="draw d2 s-bp" fill="none" stroke-width="1.5"><rect x="82" y="66" width="50" height="248" rx="25"/><rect x="288" y="66" width="50" height="248" rx="25"/></g>
+            <line class="belt-track s-bp" x1="107" y1="92" x2="107" y2="288" stroke-opacity=".5" stroke-width="2"/>
+            <line class="belt-track reverse s-bp" x1="313" y1="92" x2="313" y2="288" stroke-opacity=".5" stroke-width="2"/>
+            <g class="fade-late f-pn s-bp" stroke-width="1.5">
+              <circle cx="107" cy="91" r="15"/><circle cx="107" cy="289" r="15"/><circle cx="313" cy="91" r="15"/><circle cx="313" cy="289" r="15"/>
+            </g>
+            <g class="fade-late f-bp"><circle cx="107" cy="91" r="3"/><circle cx="107" cy="289" r="3"/><circle cx="313" cy="91" r="3"/><circle cx="313" cy="289" r="3"/></g>
+            <g class="fade-late s-mi" fill="none" stroke-opacity=".5" stroke-width="1">
+              <rect x="66" y="70" width="11" height="240"/><rect x="343" y="70" width="11" height="240"/>
+              <path d="M66 90h11M66 110h11M66 130h11M66 150h11M66 170h11M66 190h11M66 210h11M66 230h11M66 250h11M66 270h11M66 290h11"/>
+              <path d="M343 90h11M343 110h11M343 130h11M343 150h11M343 170h11M343 190h11M343 210h11M343 230h11M343 250h11M343 270h11M343 290h11"/>
+            </g>
+            <g class="draw d3 s-mi" fill="none" stroke-width="1.2"><rect x="175" y="62" width="70" height="34" rx="2"/><rect x="175" y="284" width="70" height="34" rx="2"/></g>
+            <g class="fade-late f-bp s-bp" fill-opacity=".18" stroke-opacity=".6"><rect x="183" y="70" width="54" height="18" rx="1"/><rect x="183" y="292" width="54" height="18" rx="1"/></g>
+            <g class="draw d2 s-bp" fill="none" stroke-width="1.5"><rect x="170" y="150" width="80" height="80" rx="3"/><circle cx="210" cy="190" r="31"/></g>
+            <g class="fade-late s-bp" stroke-opacity=".55" stroke-width="1"><path d="M210 159v62M179 190h62M188 168l44 44M232 168l-44 44"/></g>
+            <g class="fade-late f-ms">
+              <circle class="spin-led" style="animation-delay:0s" cx="210" cy="168" r="3"/><circle class="spin-led" style="animation-delay:.3s" cx="226" cy="174" r="3"/>
+              <circle class="spin-led" style="animation-delay:.6s" cx="232" cy="190" r="3"/><circle class="spin-led" style="animation-delay:.9s" cx="226" cy="206" r="3"/>
+              <circle class="spin-led" style="animation-delay:1.2s" cx="210" cy="212" r="3"/><circle class="spin-led" style="animation-delay:1.5s" cx="194" cy="206" r="3"/>
+              <circle class="spin-led" style="animation-delay:1.8s" cx="188" cy="190" r="3"/><circle class="spin-led" style="animation-delay:2.1s" cx="194" cy="174" r="3"/>
+            </g>
+            <g class="fade-late"><g class="piece-a"><rect x="96" y="96" width="22" height="22" rx="5" class="f-ms"/></g><g class="piece-b"><rect x="302" y="96" width="22" height="22" rx="5" class="f-bp"/></g></g>
+            <g class="fade-late">
+              <line x1="60" y1="345" x2="60" y2="392" class="s-ms" stroke-opacity=".5"/><line x1="360" y1="345" x2="360" y2="392" class="s-ms" stroke-opacity=".5"/>
+              <line x1="64" y1="385" x2="356" y2="385" class="s-ms" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <rect x="186" y="376" width="48" height="18" class="f-pn"/><text x="210" y="389" text-anchor="middle" class="mono f-ms" font-size="12">14.00″</text>
+            </g>
+            <g class="fade-late">
+              <line x1="55" y1="40" x2="18" y2="40" class="s-ms" stroke-opacity=".5"/><line x1="55" y1="340" x2="18" y2="340" class="s-ms" stroke-opacity=".5"/>
+              <line x1="26" y1="44" x2="26" y2="336" class="s-ms" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <rect x="14" y="170" width="24" height="40" class="f-pn"/><text x="26" y="190" text-anchor="middle" class="mono f-ms" font-size="12" transform="rotate(-90 26 190)">14.00″</text>
+            </g>
+            <rect class="draw d2 s-bp" x="380" y="262" width="110" height="31" rx="2" fill="none" stroke-width="1.5"/>
+            <g class="fade-late">
+              <line x1="500" y1="262" x2="500" y2="293" class="s-ms" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <text x="435" y="252" text-anchor="middle" class="mono f-mi" font-size="10">side view, 1:2</text>
+              <text x="435" y="313" text-anchor="middle" class="mono f-ms" font-size="12">4.00″ tall</text>
+            </g>
+            <g class="fade-late">
+              <line x1="338" y1="150" x2="398" y2="118" class="s-mi" stroke-opacity=".6"/><circle cx="338" cy="150" r="3" class="f-ms"/>
+              <text x="384" y="104" class="mono f-fg" font-size="11">drift −5 mm</text><text x="384" y="120" class="mono f-mi" font-size="10">over 7 CAD revs</text>
+            </g>
+          </svg>
+          <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 border border-line text-[13px]">
+            <div class="p-3 border-b sm:border-b-0 border-r border-line"><div class="font-mono text-[11px] text-mist">Part</div><div class="font-medium mt-0.5">Fraction Frenzy</div></div>
+            <div class="p-3 border-b sm:border-b-0 sm:border-r border-line"><div class="font-mono text-[11px] text-mist">CAD lead</div><div class="font-medium mt-0.5">J. Lin</div></div>
+            <div class="p-3 border-r border-line"><div class="font-mono text-[11px] text-mist">Iterations</div><div class="font-medium mt-0.5">7 in SolidWorks</div></div>
+            <div class="p-3"><div class="font-mono text-[11px] text-mist">User rating</div><div class="font-medium mt-0.5">8/10, n = 15</div></div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="py-20 md:py-28 border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16">
+        <div>
+          <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">About me</h2>
+          <div class="mt-6 space-y-5 text-mist leading-relaxed max-w-[60ch]">
+            <p>I’m a mechanical engineering student at Northeastern, graduating in May 2029. Most of my projects start as a cardboard mockup, turn into SolidWorks parts, and go through a lot of printed versions before they actually work.</p>
+                        <p>Outside class, I work in a materials research lab and at AutoZone, where I test batteries, alternators, and starters on customers’ cars. I’m also a member of Northeastern Electric Racing and ASME.</p>
+          </div>
+          <dl class="mt-8 grid grid-cols-3 gap-px border border-line bg-line text-center">
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">GPA</dt><dd class="font-display display-wide font-bold text-2xl mt-1">3.93</dd></div>
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">Graduating</dt><dd class="font-display display-wide font-bold text-2xl mt-1">2029</dd></div>
+            <div class="bg-panel p-4"><dt class="text-xs text-mist">Based in</dt><dd class="font-display display-wide font-bold text-2xl mt-1">Boston</dd></div>
+          </dl>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="panel lift p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded bg-blueprint/15 text-blueprint"><i data-lucide="box" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">CAD and drawings</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded border border-blueprint/30 bg-blueprint/10 px-3 py-1">SolidWorks</li><li class="rounded border border-blueprint/30 bg-blueprint/10 px-3 py-1">AutoCAD</li>
+              <li class="rounded border border-blueprint/30 bg-blueprint/10 px-3 py-1">Fit and clearance design</li><li class="rounded border border-blueprint/30 bg-blueprint/10 px-3 py-1">Drawing packages</li>
+            </ul>
+            <p class="mt-4 text-xs text-mist leading-relaxed"><span class="font-mono text-measure">Used in:</span> Fraction Frenzy drivetrain and full assembly, research sample holders and stands, sensor enclosure.</p>
+          </div>
+          <div class="panel lift p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded bg-measure/15 text-measure"><i data-lucide="hammer" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Fabrication</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">Waterjet</li><li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">3D printing</li>
+              <li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">Laser cutting</li><li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">Coil winding</li>
+              <li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">Soldering</li><li class="rounded border border-measure/30 bg-measure/10 px-3 py-1">Woodworking</li>
+            </ul>
+            <p class="mt-4 text-xs text-mist leading-relaxed"><span class="font-mono text-measure">Used in:</span> aluminum research stands, custom electromagnets, printed dowels and holders, laser-cut enclosures.</p>
+          </div>
+          <div class="panel lift p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded bg-violet-400/15 text-violet-500"><i data-lucide="cpu" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Electromechanical and test</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1">MicroPython and Pico</li><li class="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1">DC motors and drivers</li>
+              <li class="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1">Gaussmeter</li><li class="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1">Multimeter and OBD</li>
+              <li class="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1">MATLAB</li>
+            </ul>
+            <p class="mt-4 text-xs text-mist leading-relaxed"><span class="font-mono text-measure">Used in:</span> conveyor drive, ultrasonic sensor system, electromagnet validation, FMR data processing.</p>
+          </div>
+          <div class="panel lift p-6">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded bg-sky-400/15 text-sky-500"><i data-lucide="sigma" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Methods and coursework</h3></div>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Weighted decision matrix</li><li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Kepner-Tregoe</li>
+              <li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Root-cause analysis</li><li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Statics</li>
+              <li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Thermodynamics</li><li class="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1">Materials science</li>
+            </ul>
+            <p class="mt-4 text-xs text-mist leading-relaxed"><span class="font-mono text-measure">Used in:</span> concept selection on both class projects, the conveyor friction failures, sensor selection.</p>
+          </div>
+          <div class="panel p-6 sm:col-span-2 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3"><span class="grid place-items-center h-10 w-10 rounded bg-fg/10"><i data-lucide="languages" class="h-5 w-5"></i></span><h3 class="font-display font-semibold text-lg">Languages</h3></div>
+            <ul class="flex flex-wrap gap-2 text-sm"><li class="rounded border border-line px-3 py-1">English, native</li><li class="rounded border border-line px-3 py-1">Mandarin, native</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECT GRID ================= -->
+    <section id="projects" class="py-20 md:py-28 border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Featured projects</h2>
+            <p class="mt-3 text-mist max-w-xl">Click a project to see the full write-up: what it had to do, what I tried, what broke, and how I fixed it.</p>
+          </div>
+        </div>
+        <div id="project-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article class="project-card panel lift overflow-hidden flex flex-col relative">
+            <div class="relative aspect-[16/10] overflow-hidden bg-panel">
+              <img src="images/cv-final.jpg" alt="" loading="lazy" class="cover-img absolute inset-0 h-full w-full object-cover" />
+              <span class="absolute left-3 top-3 font-mono text-[11px] px-2 py-1 rounded bg-[#070b16]/80 text-[#3ee6a8] border border-[#3ee6a8]/40">7 CAD iterations</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="font-mono text-xs text-mist">Cornerstone of Engineering 2 · Spring 2026 · Team of 5</p>
+              <h3 class="mt-2 font-display font-semibold text-xl leading-snug"><a href="fraction-frenzy.html" class="card-link">Fraction Frenzy</a></h3>
+              <p class="mt-3 text-[15px] text-mist leading-relaxed">A 14″ × 14″ × 4″ conveyor-belt board game for 5th-grade fraction practice. As CAD lead, I designed the drivetrain and took it through 7 SolidWorks iterations, cutting belt drift by 5 mm.</p>
+              <dl class="mt-5 grid grid-cols-3 gap-2"><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">belt drift</dt><dd class="font-display font-bold text-measure text-base leading-tight">−5 mm</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">belt drift</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">shaft clearance</dt><dd class="font-display font-bold text-measure text-base leading-tight">0.03″</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">shaft clearance</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">from 15 users</dt><dd class="font-display font-bold text-measure text-base leading-tight">8/10</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">from 15 users</dd></div></dl>
+              <ul class="mt-5 flex flex-wrap gap-1.5" aria-label="Skills used"><li class="rounded border border-line px-2 py-0.5 text-xs">SolidWorks</li><li class="rounded border border-line px-2 py-0.5 text-xs">Drawing package</li><li class="rounded border border-line px-2 py-0.5 text-xs">3D printing</li><li class="rounded border border-line px-2 py-0.5 text-xs">DC drive</li></ul>
+              <div class="mt-auto pt-6 flex flex-wrap gap-2">
+                <span class="btn btn-primary" aria-hidden="true"><i data-lucide="layers" class="h-4 w-4"></i> Read the project</span>
+                <a href="https://www.youtube.com/watch?v=qRW1JOPw_Ok" target="_blank" rel="noopener" class="btn btn-ghost relative z-10"><i data-lucide="play-circle" class="h-4 w-4"></i> Demo video</a>
+              </div>
+            </div>
+          </article>
+          <article class="project-card panel lift overflow-hidden flex flex-col relative">
+            <div class="relative aspect-[16/10] overflow-hidden bg-panel">
+              <img src="images/rs-electromagnet.jpg" alt="" loading="lazy" class="cover-img absolute inset-0 h-full w-full object-cover" />
+              <span class="absolute left-3 top-3 font-mono text-[11px] px-2 py-1 rounded bg-[#070b16]/80 text-[#3ee6a8] border border-[#3ee6a8]/40">Ongoing</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="font-mono text-xs text-mist">AMML, Northeastern · Mar 2026 – present</p>
+              <h3 class="mt-2 font-display font-semibold text-xl leading-snug"><a href="research.html" class="card-link">Research Fixtures and Electromagnets</a></h3>
+              <p class="mt-3 text-[15px] text-mist leading-relaxed">Stands, an indexed sample holder, and electromagnets for testing magnetic thin films. The electromagnets I wound reach 800 G at under 5 A, four times the 200 G we needed.</p>
+              <dl class="mt-5 grid grid-cols-3 gap-2"><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">vs. 200 G needed</dt><dd class="font-display font-bold text-measure text-base leading-tight">800 G</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">vs. 200 G needed</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">coil turns</dt><dd class="font-display font-bold text-measure text-base leading-tight">2 × 250</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">coil turns</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">PCB clearance</dt><dd class="font-display font-bold text-measure text-base leading-tight">≈0.3 mm</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">PCB clearance</dd></div></dl>
+              <ul class="mt-5 flex flex-wrap gap-1.5" aria-label="Skills used"><li class="rounded border border-line px-2 py-0.5 text-xs">SolidWorks</li><li class="rounded border border-line px-2 py-0.5 text-xs">Waterjet</li><li class="rounded border border-line px-2 py-0.5 text-xs">Coil winding</li><li class="rounded border border-line px-2 py-0.5 text-xs">Gaussmeter</li></ul>
+              <div class="mt-auto pt-6 flex flex-wrap gap-2">
+                <span class="btn btn-primary" aria-hidden="true"><i data-lucide="layers" class="h-4 w-4"></i> Read the project</span>
+                
+              </div>
+            </div>
+          </article>
+          <article class="project-card panel lift overflow-hidden flex flex-col relative">
+            <div class="relative aspect-[16/10] overflow-hidden bg-panel">
+              <img src="images/vs-final.jpg" alt="" loading="lazy" class="cover-img absolute inset-0 h-full w-full object-cover" />
+              <span class="absolute left-3 top-3 font-mono text-[11px] px-2 py-1 rounded bg-[#070b16]/80 text-[#3ee6a8] border border-[#3ee6a8]/40">Solo · 3 weeks</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="font-mono text-xs text-mist">Cornerstone of Engineering 1 · Fall 2025</p>
+              <h3 class="mt-2 font-display font-semibold text-xl leading-snug"><a href="proximity-sensor.html" class="card-link">Vehicle Side-Proximity Sensor</a></h3>
+              <p class="mt-3 text-[15px] text-mist leading-relaxed">Two ultrasonic sensors sweep 180° on servos and beep faster as something gets closer. I scrapped my first motion-sensor version because it couldn’t see curbs, then rebuilt it in 3 weeks.</p>
+              <dl class="mt-5 grid grid-cols-3 gap-2"><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">range</dt><dd class="font-display font-bold text-measure text-base leading-tight">2–50 cm</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">range</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">sweep</dt><dd class="font-display font-bold text-measure text-base leading-tight">180°</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">sweep</dd></div><div class="rounded border border-line bg-ink/50 px-2.5 py-2"><dt class="sr-only">parts cost</dt><dd class="font-display font-bold text-measure text-base leading-tight">$26.30</dd><dd class="text-[11px] text-mist mt-0.5 leading-tight">parts cost</dd></div></dl>
+              <ul class="mt-5 flex flex-wrap gap-1.5" aria-label="Skills used"><li class="rounded border border-line px-2 py-0.5 text-xs">MicroPython</li><li class="rounded border border-line px-2 py-0.5 text-xs">Ultrasonic sensing</li><li class="rounded border border-line px-2 py-0.5 text-xs">AutoCAD</li><li class="rounded border border-line px-2 py-0.5 text-xs">Laser cutting</li></ul>
+              <div class="mt-auto pt-6 flex flex-wrap gap-2">
+                <span class="btn btn-primary" aria-hidden="true"><i data-lucide="layers" class="h-4 w-4"></i> Read the project</span>
+                <a href="https://www.youtube.com/shorts/TaLlRtZOmOg" target="_blank" rel="noopener" class="btn btn-ghost relative z-10"><i data-lucide="play-circle" class="h-4 w-4"></i> Demo video</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience" class="py-20 md:py-28 border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Experience</h2>
+        <ol class="timeline relative mt-14 space-y-12">
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-measure ring-4 ring-measure/20" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Jun 2026 – present</p><p class="text-sm text-mist mt-1">Braintree, MA</p></div>
+            <article class="panel lift p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Parts Sales Associate</h3><p class="text-blueprint mt-1">AutoZone</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="wrench" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Install and replace standard automotive components across 10+ makes, beating service SLA time targets for batteries, bulbs, windshield wipers, and filters.</span></li>
+                <li class="flex gap-3"><i data-lucide="zap" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Diagnose electrical faults for 10+ customers per day using multimeters, OBD scanners, and battery, alternator, and starter testers to find root causes and recommend the right repair.</span></li>
+                <li class="flex gap-3"><i data-lucide="trending-up" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Advise 50+ customers daily on engine, brake, and suspension systems, matching OEM-spec parts and consistently exceeding monthly sales targets by 35%.</span></li>
+              </ul>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-blueprint ring-4 ring-blueprint/20" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Mar 2026 – present</p><p class="text-sm text-mist mt-1">Boston, MA</p></div>
+            <article class="panel lift p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Undergraduate Research Assistant</h3><p class="text-blueprint mt-1">Advanced Materials and Microsystems Laboratory, Northeastern University</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="magnet" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Prepare and mount 8+ sputtered magnetic thin-film samples along easy and hard axes on a GMW-3470 magnet to characterize anisotropy, using stands I designed in CAD and fabricated by 3D printing and waterjet cutting.</span></li>
+                <li class="flex gap-3"><i data-lucide="activity" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Measure magnetostrictive deflection across 5+ film compositions on an optical cantilever rig, generating strain vs. magnetic field graphs for joint analysis with graduate researchers.</span></li>
+                <li class="flex gap-3"><i data-lucide="grid-3x3" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Process angle-resolved FMR measurements in MATLAB across 31 bias-field orientations and 30 field steps, producing colormaps of resonance behavior for 8 devices on a test wafer.</span></li>
+              </ul>
+              <a href="research.html" class="mt-5 inline-flex items-center gap-1.5 text-sm text-blueprint hover:underline">See the research case study <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full bg-mist ring-4 ring-mist/20" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">May 2026 – Aug 2026</p><p class="font-mono text-sm text-measure">Jun 2023 – Aug 2025</p><p class="text-sm text-mist mt-1">Braintree, MA</p></div>
+            <article class="panel lift p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">Sales Associate</h3><p class="text-blueprint mt-1">Space Zero</p>
+              <ul class="mt-5 space-y-3 text-mist leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="settings" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Troubleshot mechanical and technology failures across the store while keeping customers informed, cutting peak-hour wait times by up to 20%.</span></li>
+                <li class="flex gap-3"><i data-lucide="users" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Trained and supported teammates through high-volume shifts of 250+ customers a day, consistently meeting service targets with minimal checkout delays.</span></li>
+                <li class="flex gap-3"><i data-lucide="shield-check" class="h-4 w-4 mt-1 shrink-0 text-measure"></i><span>Mediated 2–4 guest conflicts and behavioral issues per day on the trampoline park floor, enforcing safety regulations while keeping the guest experience positive.</span></li>
+              </ul>
+            </article>
+          </li>
+          <li class="relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-10 pl-10 md:pl-0">
+            <span class="absolute left-[5px] md:left-[193px] top-2 h-[13px] w-[13px] rounded-full border-2 border-blueprint bg-ink" aria-hidden="true"></span>
+            <div class="md:text-right md:pr-10"><p class="font-mono text-sm text-measure">Expected May 2029</p><p class="text-sm text-mist mt-1">Boston, MA</p></div>
+            <article class="panel lift p-6 md:p-7">
+              <h3 class="font-display font-semibold text-xl">B.S. in Mechanical Engineering</h3><p class="text-blueprint mt-1">Northeastern University, GPA 3.93</p>
+              <p class="mt-4 text-mist leading-relaxed">Relevant coursework: Thermodynamics, Statics, Introduction to Materials Science, Differential Equations and Linear Algebra, Calculus III. Activities: Northeastern Electric Racing (NER) and the American Society of Mechanical Engineers (ASME).</p>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="py-20 md:py-28 border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
+          <div>
+            <h2 class="font-display display-wide font-bold text-3xl md:text-[2.6rem] leading-tight tracking-tight">Contact</h2>
+            <p class="mt-4 text-mist leading-relaxed max-w-md">I’m looking for co-op, internship, and research opportunities in mechanical design, prototyping, and test. The best way to reach me is by email.</p>
+          </div>
+          <ul class="grid sm:grid-cols-2 gap-3">
+            <li><a href="mailto:lin.jona@northeastern.edu" class="panel lift flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded bg-blueprint/15 text-blueprint"><i data-lucide="mail" class="h-5 w-5"></i></span><span class="min-w-0"><span class="block text-xs text-mist">Email</span><span class="block truncate">lin.jona@northeastern.edu</span></span></a></li>
+            <li><a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" class="panel lift flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded bg-blueprint/15 text-blueprint"><i data-lucide="linkedin" class="h-5 w-5"></i></span><span class="min-w-0"><span class="block text-xs text-mist">LinkedIn</span><span class="block truncate">jonathan-lin-315327315</span></span></a></li>
+            <li><a href="https://github.com/Creations111" target="_blank" rel="noopener" class="panel lift flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded bg-blueprint/15 text-blueprint"><i data-lucide="github" class="h-5 w-5"></i></span><span class="min-w-0"><span class="block text-xs text-mist">GitHub</span><span class="block truncate">Creations111</span></span></a></li>
+            <li><a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="panel lift flex items-center gap-4 p-4"><span class="grid place-items-center h-10 w-10 rounded bg-measure/15 text-measure"><i data-lucide="file-text" class="h-5 w-5"></i></span><span class="min-w-0"><span class="block text-xs text-mist">Resume</span><span class="block truncate">Jonathan_Lin_Resume.pdf</span></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-mist">
+      <p>© <span id="year"></span> Jonathan Lin</p>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/Creations111" target="_blank" rel="noopener" aria-label="GitHub" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="github" class="h-5 w-5"></i></a>
+        <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+        <a href="mailto:lin.jona@northeastern.edu" aria-label="Email" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="mail" class="h-5 w-5"></i></a>
+        <a href="#main" aria-label="Back to top" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="arrow-up" class="h-5 w-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="relative m-auto flex flex-col items-center gap-3 p-4" style="padding-top:calc(16px + env(safe-area-inset-top,0px))">
+      <img id="lb-img" src="" alt="" />
+      <p id="lb-cap" class="max-w-2xl text-center text-sm text-[#c7cede]"></p>
+      <p id="lb-count" class="font-mono text-xs text-[#8e98b0]"></p>
+    </div>
+    <button id="lb-close" class="lb-btn right-4" style="top:calc(16px + env(safe-area-inset-top,0px))" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <button id="lb-prev" class="lb-btn left-3 top-1/2 -translate-y-1/2" aria-label="Previous image"><i data-lucide="chevron-left" class="h-5 w-5"></i></button>
+    <button id="lb-next" class="lb-btn right-3 top-1/2 -translate-y-1/2" aria-label="Next image"><i data-lucide="chevron-right" class="h-5 w-5"></i></button>
+  </dialog>
+
+  <script src="site.js"></script>
+</body>
+</html>

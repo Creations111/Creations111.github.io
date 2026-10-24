@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fraction Frenzy — Jonathan Lin</title>
+  <meta name="description" content="Conveyor-belt math board game: drivetrain design, 7 SolidWorks iterations, and every build–test–revise step." />
+  <meta property="og:title" content="Fraction Frenzy — Jonathan Lin" />
+  <meta property="og:description" content="Conveyor-belt math board game: drivetrain design, 7 SolidWorks iterations, and every build–test–revise step." />
+  <meta property="og:image" content="https://creations111.github.io/images/cv-final.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>" />
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    const v = (n) => `rgb(var(--${n}) / <alpha-value>)`;
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Archivo", "Helvetica Neue", "Arial", "sans-serif"],
+            sans: ['"IBM Plex Sans"', "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+            mono: ['"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+          },
+          colors: { ink: v("ink"), panel: v("panel"), line: v("line"), blueprint: v("blueprint"), measure: v("measure"), mist: v("mist"), fg: v("fg"), warn: v("warn") }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-sans drafting-grid min-h-screen">
+  <div class="glow fixed inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-blueprint focus:text-ink focus:px-4 focus:py-2">Skip to content</a>
+
+  <!-- ================= NAV ================= -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 border-b border-transparent backdrop-blur-xl">
+    <nav class="mx-auto max-w-6xl px-5 sm:px-8 h-[72px] flex items-center justify-between" aria-label="Primary">
+      <a href="index.html" class="flex items-center gap-3 group" aria-label="Jonathan Lin, back to top">
+        <span class="grid place-items-center h-9 w-9 rounded border border-blueprint/50 bg-blueprint/10 font-display display-wide font-bold text-sm text-blueprint group-hover:bg-blueprint group-hover:text-ink transition-colors">JL</span>
+        <span class="font-display font-semibold tracking-tight text-[15px] hidden sm:block">Jonathan Lin</span>
+      </a>
+      <div class="flex items-center gap-2 md:gap-8">
+        <div class="hidden md:flex items-center gap-8 text-sm text-mist">
+          <a href="index.html#about" class="nav-link hover:text-fg transition-colors">About</a>
+          <a href="index.html#projects" class="nav-link active hover:text-fg transition-colors">Projects</a>
+          <a href="index.html#experience" class="nav-link hover:text-fg transition-colors">Experience</a>
+          <a href="index.html#contact" class="nav-link hover:text-fg transition-colors">Contact</a>
+        </div>
+        <button id="theme-btn" class="grid place-items-center h-10 w-10 rounded border border-line text-mist hover:text-fg hover:border-blueprint transition-colors" aria-label="Switch to light mode" title="Switch light or dark mode">
+          <i data-lucide="moon" class="theme-moon h-4 w-4"></i><i data-lucide="sun" class="theme-sun h-4 w-4"></i>
+        </button>
+        <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="hidden md:inline-flex btn border border-measure/50 text-measure hover:bg-measure hover:text-ink"><i data-lucide="file-text" class="h-4 w-4"></i> Resume</a>
+        <button id="menu-btn" class="burger md:hidden p-2 -mr-2 text-fg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden">
+      <div>
+        <div class="panel mx-4 mb-4 p-3 flex flex-col text-base">
+          <a href="index.html#about" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">About</a>
+          <a href="index.html#projects" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Projects</a>
+          <a href="fraction-frenzy.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Fraction Frenzy</a>
+          <a href="research.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Research fixtures</a>
+          <a href="proximity-sensor.html" class="mobile-link rounded px-4 py-3 pl-8 text-mist hover:bg-blueprint/10">Proximity sensor</a>
+          <a href="index.html#experience" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Experience</a>
+          <a href="index.html#contact" class="mobile-link rounded px-4 py-3 hover:bg-blueprint/10">Contact</a>
+          <a href="Jonathan_Lin_Resume.pdf" target="_blank" rel="noopener" class="mobile-link mt-2 rounded px-4 py-3 bg-measure text-ink font-medium flex items-center gap-2"><i data-lucide="file-text" class="h-4 w-4"></i> Open resume (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= CASE STUDY 01: FRACTION FRENZY ================= -->
+    <section id="fraction-frenzy" class="case pt-[calc(72px+env(safe-area-inset-top,0px))] pb-20 md:pb-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <a href="index.html#projects" class="back-link mt-8 md:mt-12 inline-flex items-center gap-1.5 text-sm text-mist hover:text-fg transition-colors"><i data-lucide="arrow-left" class="h-4 w-4"></i> All projects</a>
+        <div class="mt-6"></div>
+        <p class="font-mono text-sm text-measure">Case study 01 · Cornerstone of Engineering 2 · Spring 2026 · Team of 5</p>
+        <h2 class="mt-3 font-display display-wide font-bold text-3xl md:text-[3rem] leading-[1.05] tracking-tight max-w-3xl">Fraction Frenzy: a conveyor-belt board game for 5th-grade math</h2>
+
+        <div class="mt-10 grid lg:grid-cols-[1.35fr_1fr] gap-8 items-start">
+          <figure class="fig">
+            <a href="images/cv-final.jpg" class="zoom aspect-[4/3]" data-gallery="ff" data-caption="Final build at the showcase: two conveyor belts, a central LED spinner, two LCDs, and a keypad for each team."><img src="images/cv-final.jpg" alt="The finished Fraction Frenzy board game with two conveyor belts, a central spinner, an LCD, and a keypad." loading="lazy" /></a>
+            <figcaption>Final build at the showcase.</figcaption>
+          </figure>
+          <div class="space-y-5">
+            <dl class="grid grid-cols-2 gap-3">
+              <div class="panel p-4"><dt class="text-xs text-mist">CAD iterations</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">7</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Belt drift</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">−5 mm</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Avg. user rating</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">8/10</dd><dd class="text-xs text-mist mt-0.5">from 15 users</dd></div>
+              <div class="panel p-4"><dt class="text-xs text-mist">Shaft clearance</dt><dd class="font-display display-wide font-bold text-2xl text-measure mt-1">0.03″</dd><dd class="text-xs text-mist mt-0.5">0.76 mm diametral</dd></div>
+            </dl>
+            <div class="panel p-5">
+              <h3 class="font-display font-semibold">My role: CAD Lead and Project Manager</h3>
+              <p class="mt-2 text-sm text-mist leading-relaxed">I designed the drivetrain for both belts: the dowels, the stands, and the shaft fits. I made the key SolidWorks parts and the full assembly, went through 7 CAD iterations, printed the conveyor parts and game pieces, and set up the belts. I also ran the schedule for our 5-person team.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.youtube.com/watch?v=qRW1JOPw_Ok" target="_blank" rel="noopener" class="btn btn-primary"><i data-lucide="play-circle" class="h-4 w-4"></i> Watch demo</a>
+              <a href="https://github.com/Creations111?tab=repositories" target="_blank" rel="noopener" class="btn btn-ghost"><i data-lucide="github" class="h-4 w-4"></i> View code</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 01 -->
+        <h3 class="sec"><span class="num">01</span>Problem and requirements</h3>
+        <p class="lead mt-5">Our client was a 5th-grade class at Melrose Leadership Academy in Oakland, California, practicing adding fractions with unlike denominators. They wanted something team-based, competitive, and hands-on.</p>
+        <div class="tbl-wrap mt-6"><table class="tbl">
+          <thead><tr><th>Requirement</th><th>Target</th></tr></thead>
+          <tbody>
+            <tr><td>Piece alignment</td><td>The belt stops each piece in line with the board squares</td></tr>
+            <tr><td>Game length</td><td>5 minutes or less, so the class can rotate through many players</td></tr>
+            <tr><td>Movement</td><td>A correct answer moves the team’s piece a random 1–3 steps</td></tr>
+            <tr><td>Input</td><td>Both teams can type answers at the same time</td></tr>
+            <tr><td>Envelope</td><td>14″ × 14″ × 4″ tabletop board</td></tr>
+          </tbody>
+        </table></div>
+
+        <!-- 02 -->
+        <h3 class="sec"><span class="num">02</span>Concept selection</h3>
+        <p class="lead mt-5">We scored 12 ideas in a weighted decision matrix. Teaching math counted most (30%), then team play (20%) and ease of building (15%). The board game actually came in second to Robot Race, 7.60 to 7.98. We picked it anyway because it was the one our team could build well and get fully working in the time we had.</p>
+        <div class="tbl-wrap mt-6 max-w-2xl"><table class="tbl" style="min-width:420px">
+          <thead><tr><th>Concept (top 4 of 12)</th><th>Weighted score / 10</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Robot Race</td><td class="font-mono">7.98</td><td></td></tr>
+            <tr class="pick"><td>Board game</td><td class="font-mono">7.60</td><td><span class="tag ok">Selected</span></td></tr>
+            <tr><td>Claw machine</td><td class="font-mono">7.50</td><td></td></tr>
+            <tr><td>Catapult target shooting</td><td class="font-mono">7.40</td><td></td></tr>
+          </tbody>
+        </table></div>
+
+        <details class="pkg panel mt-6">
+          <summary class="flex items-center justify-between gap-4 p-5">
+            <span><span class="font-display font-semibold">Motor and belt options we compared</span> <span class="text-mist text-sm">· servo, stepper, DC motor; four belt materials</span></span>
+            <i data-lucide="chevron-down" class="chev h-5 w-5 text-mist transition-transform"></i>
+          </summary>
+          <div class="px-5 pb-6">
+        <h4 class="font-display font-semibold text-lg">Drive</h4>
+        <div class="tbl-wrap mt-4"><table class="tbl">
+          <thead><tr><th>Option</th><th>Strength</th><th>Limitation</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>Servo motor</td><td>Simple position control</td><td>Only swings 180°, so belt travel is short and the belt gets dragged back each time</td><td><span class="tag no">Rejected</span></td></tr>
+            <tr><td>Stepper motor and driver</td><td>Precise steps</td><td>Needs more GPIO pins, and the Pico was already short</td><td><span class="tag mid">Not pursued</span></td></tr>
+            <tr class="pick"><td>DC gear motor and driver</td><td>Continuous rotation in either direction; one driver runs both belts</td><td>Needs calibration to stop on a square</td><td><span class="tag ok">Selected</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <h4 class="mt-8 font-display font-semibold text-lg">Belt material</h4>
+        <div class="tbl-wrap mt-4"><table class="tbl">
+          <thead><tr><th>Option</th><th>Strength</th><th>Limitation</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>Cloth belt</td><td>Easy to cut and stitch</td><td>Edges fray and need stitching</td><td><span class="tag mid">Prototype only</span></td></tr>
+            <tr><td>Rubber bands</td><td>The conventional belt material</td><td>Too costly for our budget</td><td><span class="tag no">Rejected</span></td></tr>
+            <tr><td>3D-printed gear track</td><td>Positive drive with no slip</td><td>Complex to model and print in our timeline</td><td><span class="tag no">Rejected</span></td></tr>
+            <tr class="pick"><td>Rubber belt on sandpaper-wrapped dowels</td><td>Best grip in testing and low cost</td><td>Velcro wouldn’t glue to rubber, so it was sewn on</td><td><span class="tag ok">Selected</span></td></tr>
+          </tbody>
+        </table></div>
+          </div>
+        </details>
+
+        <!-- 03 -->
+        <h3 class="sec"><span class="num">03</span>Analysis</h3>
+        <div class="mt-6 grid lg:grid-cols-3 gap-5">
+          <div class="panel p-5">
+            <h4 class="font-display font-semibold">Why a servo couldn’t drive the belt</h4>
+            <p class="mt-3"><span class="eq">s = r × θ</span></p>
+            <p class="mt-3 text-sm text-mist leading-relaxed">Our first plan used servos. A servo only sweeps 180° (π rad), so on our earlier, smaller dowel it moved the belt about 4 cm, then had to swing back and drag the pieces with it. A DC motor keeps turning, so it can move a piece as far as it needs to and bring every piece back at the end.</p>
+          </div>
+          <div class="panel p-5">
+            <h4 class="font-display font-semibold">Meeting the 5-minute limit</h4>
+            <p class="mt-3"><span class="eq">12 steps ÷ (1 to 3 per answer)</span></p>
+            <p class="mt-3 text-sm text-mist leading-relaxed">At one step per answer, every game took 12 correct answers, which was too slow for 5 minutes. We added an LED spinner with 8 sections worth 1–3 steps, so a team needs 4 to 12 correct answers instead of always 12.</p>
+          </div>
+          <div class="panel p-5">
+            <h4 class="font-display font-semibold">Pin budget</h4>
+            <p class="mt-3"><span class="eq">≈32 pins needed &gt; 26 GPIO</span></p>
+            <p class="mt-3 text-sm text-mist leading-relaxed">Our first wiring plan needed about 32 pins, and the Pico only has 26. Running both belts off one motor driver and putting the keypads and LCDs on I2C adapters got us under.</p>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <h3 class="sec"><span class="num">04</span>Design</h3>
+        <div class="mt-6 grid lg:grid-cols-[1fr_1.15fr] gap-8 items-start">
+          <div class="space-y-5">
+            <div class="panel p-5">
+              <h4 class="font-display font-semibold">Shaft-to-stand fit</h4>
+              <p class="mt-2 text-sm text-mist leading-relaxed">Each dowel shaft is Ø0.57″ and runs in a Ø0.60″ bore in the stand, a designed diametral clearance of <strong class="text-fg">0.03″ (0.76 mm)</strong>, about 0.38 mm per side. With too little clearance, the printed dowels jammed from friction. With too much, they wobbled and the belt drifted.</p>
+            </div>
+            <div class="panel p-5">
+              <h4 class="font-display font-semibold">Keeping the belt on track</h4>
+              <p class="mt-2 text-sm text-mist leading-relaxed">I added flanged lips at both ends of each dowel to keep the belt from walking off sideways, and wrapped the dowels in sandpaper for traction. The shaft ends have a hex socket for the motor connection (Detail B on the dowel drawing in the package below).</p>
+            </div>
+            <div class="panel p-5">
+              <h4 class="font-display font-semibold">Integrating the full assembly</h4>
+              <p class="mt-2 text-sm text-mist leading-relaxed">I put everyone’s parts into one SolidWorks assembly with section and exploded views, so we could check how the stands, belts, ratchet frame, and enclosure fit together before printing or cutting anything.</p>
+            </div>
+          </div>
+          <figure class="fig draw-sheet">
+            <a href="images/dwg-assembly.jpg" class="zoom aspect-[1600/901]" data-gallery="ff" data-caption="Full conveyor assembly drawing with section and exploded views. Drawn by Jonathan Lin."><img src="images/dwg-assembly.jpg" alt="SolidWorks assembly drawing of the conveyor game with section and exploded views." loading="lazy" /></a>
+            <figcaption>Full assembly with section views A-A and B-B and an exploded view. Drawn by me.</figcaption>
+          </figure>
+        </div>
+
+        <details class="pkg panel mt-6">
+          <summary class="flex items-center justify-between gap-4 p-5">
+            <span><span class="font-display font-semibold">Full drawing package</span> <span class="text-mist text-sm">· 13 sheets, with who drew each one</span></span>
+            <i data-lucide="chevron-down" class="chev h-5 w-5 text-mist transition-transform"></i>
+          </summary>
+          <div class="px-5 pb-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <figure class="fig draw-sheet"><a href="images/dwg-assembly.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Assembly. Drawn by Jonathan Lin."><img src="images/dwg-assembly.jpg" alt="Assembly drawing." loading="lazy" /></a><figcaption>Assembly. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-dowel.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Dowel. Drawn by Jonathan Lin."><img src="images/dwg-dowel.jpg" alt="Dowel drawing." loading="lazy" /></a><figcaption>Dowel. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-stand.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Stand, revised. Drawn by Jonathan Lin."><img src="images/dwg-stand.jpg" alt="Stand drawing." loading="lazy" /></a><figcaption>Stand, revised. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-stand-motor.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Stand with motor holder. Drawn by Jonathan Lin."><img src="images/dwg-stand-motor.jpg" alt="Stand with motor holder drawing." loading="lazy" /></a><figcaption>Stand with motor holder. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-belt.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Belt. Drawn by Jonathan Lin."><img src="images/dwg-belt.jpg" alt="Belt drawing." loading="lazy" /></a><figcaption>Belt. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-spinner.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Spinner. Drawn by Jonathan Lin."><img src="images/dwg-spinner.jpg" alt="Spinner drawing." loading="lazy" /></a><figcaption>Spinner. Drawn by Jonathan Lin.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-ratchet-1.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Ratchet frame: designed by Jonathan Li; I helped develop and revise it."><img src="images/dwg-ratchet-1.jpg" alt="Ratchet frame drawing." loading="lazy" /></a><figcaption>Ratchet frame. Designed by Jonathan Li; I helped develop and revise it.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-ratchet-2.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Ratchet bar: designed by Jonathan Li; I helped develop and revise it."><img src="images/dwg-ratchet-2.jpg" alt="Ratchet bar drawing." loading="lazy" /></a><figcaption>Ratchet bar. Designed by Jonathan Li; I helped develop and revise it.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-box.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Enclosure box. Drawn by Sophia Zheng."><img src="images/dwg-box.jpg" alt="Enclosure box drawing." loading="lazy" /></a><figcaption>Enclosure box. Drawn by Sophia Zheng.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-box-top.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Enclosure top. Drawn by Sophia Zheng."><img src="images/dwg-box-top.jpg" alt="Enclosure top drawing." loading="lazy" /></a><figcaption>Enclosure top. Drawn by Sophia Zheng.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-lcd-holder.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="LCD holder. Drawn by Sophia Zheng."><img src="images/dwg-lcd-holder.jpg" alt="LCD holder drawing." loading="lazy" /></a><figcaption>LCD holder. Drawn by Sophia Zheng.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-numpad-bottom.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Keypad holder, bottom. Drawn by Sophia Zheng."><img src="images/dwg-numpad-bottom.jpg" alt="Keypad holder bottom drawing." loading="lazy" /></a><figcaption>Keypad holder, bottom. Drawn by Sophia Zheng.</figcaption></figure>
+            <figure class="fig draw-sheet"><a href="images/dwg-numpad-sliding.jpg" class="zoom aspect-[4/3]" data-gallery="pkg" data-caption="Keypad holder, sliding cover. Drawn by Sophia Zheng."><img src="images/dwg-numpad-sliding.jpg" alt="Keypad holder sliding cover drawing." loading="lazy" /></a><figcaption>Keypad holder, sliding cover. Drawn by Sophia Zheng.</figcaption></figure>
+          </div>
+        </details>
+
+        <!-- 05 -->
+        <h3 class="sec"><span class="num">05</span>Build, test, revise</h3>
+        <p class="lead mt-5">About ten weeks from a cardboard mockup to a working board. These are the notes from each stage.</p>
+        <ol class="mt-10 space-y-10">
+          <li class="stage">
+            <span class="dot">0</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 10–12</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Cardboard mockup</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>Full-size cardboard board with sandpaper-wrapped cardboard rollers and a stitched cloth belt.</dd>
+                <dt>Problem</dt><dd>The layout worked, but cardboard couldn’t keep the rollers lined up.</dd>
+                <dt>Change</dt><dd>Model the rollers and stands in SolidWorks and 3D-print them.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-3 gap-3">
+                <figure class="fig"><a href="images/cv-s0-cardboard-box.jpg" class="zoom aspect-[3/4]" data-gallery="ff" data-caption="Cardboard mockup of the board layout."><img src="images/cv-s0-cardboard-box.jpg" alt="Cardboard mockup of the game board." loading="lazy" /></a><figcaption>Board mockup.</figcaption></figure>
+                <figure class="fig"><a href="images/cv-s0-cardboard-roller.jpg" class="zoom aspect-[3/4]" data-gallery="ff" data-caption="First roller: sandpaper-wrapped cardboard on cardboard stands."><img src="images/cv-s0-cardboard-roller.jpg" alt="Sandpaper-wrapped cardboard roller on cardboard stands." loading="lazy" /></a><figcaption>Cardboard roller.</figcaption></figure>
+                <figure class="fig"><a href="images/cv-s0-cloth-belt.jpg" class="zoom aspect-[3/4]" data-gallery="ff" data-caption="First belt: stitched cloth."><img src="images/cv-s0-cloth-belt.jpg" alt="Stitched cloth belt on a cutting mat." loading="lazy" /></a><figcaption>Cloth belt.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot">1</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 19–25</p>
+              <h4 class="font-display font-semibold text-xl mt-1">First 3D-printed axles</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>I modeled the axle and dowel in SolidWorks and printed them to test material, dimensions, and the fit to a DC gear motor.</dd>
+                <dt>Problem</dt><dd>In version 1, nothing held the motor in line with the shaft.</dd>
+                <dt>Change</dt><dd>Version 2 seated the motor in a printed holder so the shaft stayed aligned under load.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <figure class="fig"><a href="images/cv-s1-axle-v1.jpg" class="zoom aspect-[4/3]" data-gallery="ff" data-caption="Axle version 1 coupled to a DC gear motor."><img src="images/cv-s1-axle-v1.jpg" alt="White printed axle on a stand with a yellow gear motor." loading="lazy" /></a><figcaption>Axle v1.</figcaption></figure>
+                <figure class="fig"><a href="images/cv-s2-axle-v2.jpg" class="zoom aspect-[4/3]" data-gallery="ff" data-caption="Axle version 2 with the motor seated in a printed holder."><img src="images/cv-s2-axle-v2.jpg" alt="Purple printed axle with the motor in a white printed holder." loading="lazy" /></a><figcaption>Axle v2 with motor holder.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot">2</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Feb 25</p>
+              <h4 class="font-display font-semibold text-xl mt-1">First powered belt</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>Printed rollers, motor mount, and electronics all running together in the cardboard box.</dd>
+                <dt>Result</dt><dd>First time a motor moved a game piece on the belt. We kept testing on this setup after that.</dd>
+              </dl>
+              <div class="mt-5 max-w-xl">
+                <figure class="fig"><a href="images/cv-s3-first-motion.jpg" class="zoom aspect-[4/3]" data-gallery="ff" data-caption="First functional conveyor in the cardboard test box."><img src="images/cv-s3-first-motion.jpg" alt="Working conveyor with printed rollers and a motor inside a cardboard box." loading="lazy" /></a><figcaption>First working conveyor.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot">3</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Mar 10–21</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Fixing drift and friction in CAD</h4>
+              <dl class="loop">
+                <dt>Test</dt><dd>I measured the belt’s sideways drift with a ruler on the printed conveyor.</dd>
+                <dt>Problem</dt><dd>The belt drifted a lot, and parts bound up while it ran.</dd>
+                <dt>Root cause</dt><dd>Dimensional errors in the 3D-printed dowels and stands. The first stands were too thick, the motor-holder stand sat at the wrong height, and one part rubbed against the belt.</dd>
+                <dt>Change</dt><dd>I revised the CAD: slimmed the stands, corrected the motor-mount height, set the 0.03″ shaft clearance, added flanged lips to the dowels, wrapped them in sandpaper, and redesigned the part that was rubbing.</dd>
+                <dt>Result</dt><dd>After 7 CAD iterations the motor mounts were steady, and drift was down 5 mm when I measured it again.</dd>
+              </dl>
+              <div class="mt-5 grid grid-cols-3 gap-3 max-w-3xl">
+                <figure class="fig draw-sheet"><a href="images/cv-s4-stand-revised.jpg" class="zoom aspect-square" data-gallery="ff" data-caption="Revised stand render, slimmed from the first print."><img src="images/cv-s4-stand-revised.jpg" alt="Render of the revised stand." loading="lazy" /></a><figcaption>Slimmed stand.</figcaption></figure>
+                <figure class="fig draw-sheet"><a href="images/cv-s4-stand-motor.jpg" class="zoom aspect-square" data-gallery="ff" data-caption="Stand with motor holder, height corrected."><img src="images/cv-s4-stand-motor.jpg" alt="Render of the stand with motor holder." loading="lazy" /></a><figcaption>Motor stand, height fixed.</figcaption></figure>
+                <figure class="fig draw-sheet"><a href="images/cv-s4-dowel-revised.jpg" class="zoom aspect-square" data-gallery="ff" data-caption="Revised dowel with flanged lips."><img src="images/cv-s4-dowel-revised.jpg" alt="Render of the revised dowel with flanged ends." loading="lazy" /></a><figcaption>Flanged dowel.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot">4</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Mar 17–20</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Plywood enclosure and rubber belts</h4>
+              <dl class="loop">
+                <dt>Change</dt><dd>The team moved everything into the laser-cut 14″ × 14″ × 4″ plywood enclosure and replaced the cloth belts with rubber. I printed the conveyor parts.</dd>
+                <dt>Problem</dt><dd>Several glues failed to bond the Velcro (which holds the game pieces) to the rubber.</dd>
+                <dt>Result</dt><dd>We sewed the Velcro on instead. Machine sewing was cleaner, stronger, and faster than hand stitching, so we machine-sewed the second belt.</dd>
+              </dl>
+              <div class="mt-5 max-w-xl">
+                <figure class="fig"><a href="images/cv-s5-plywood.jpg" class="zoom aspect-[14/13]" data-gallery="ff" data-caption="Unpainted plywood build with rubber belts, LCD housings, and a keypad."><img src="images/cv-s5-plywood.jpg" alt="Unpainted plywood board with two rubber belts and LCD housings." loading="lazy" /></a><figcaption>First full plywood build.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot fail">5</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Apr 2–9 · Days before the showcase</p>
+              <h4 class="font-display font-semibold text-xl mt-1">The conveyors stopped working</h4>
+              <dl class="loop">
+                <dt>Problem</dt><dd>The conveyors stopped moving even though nothing in the mechanism had changed.</dd>
+                <dt>First fix</dt><dd>Sanding and lubricant got them moving again, but they stayed inconsistent.</dd>
+                <dt>Root cause</dt><dd>The ratchet frame was pushing the stands into the dowels, adding friction the motors couldn’t overcome.</dd>
+                <dt>Change</dt><dd>We cut the frame in half and added spacing between the stands and the dowels.</dd>
+                <dt>Result</dt><dd>Both conveyors ran for the showcase.</dd>
+              </dl>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot">6</span>
+            <div>
+              <p class="font-mono text-sm text-measure">Apr 13</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Mid-span belt sag</h4>
+              <dl class="loop">
+                <dt>Problem</dt><dd>One belt sagged in the middle and struggled to stay straight.</dd>
+                <dt>Root cause</dt><dd>Not enough tension mid-span, and the stands couldn’t move any farther back on the ratchet to add more.</dd>
+                <dt>Change</dt><dd>We added a spare dowel and stand in the middle as a support roller.</dd>
+                <dt>Result</dt><dd>The sag went down.</dd>
+              </dl>
+            </div>
+          </li>
+
+          <li class="stage">
+            <span class="dot done">✓</span>
+            <div>
+              <p class="font-mono text-sm text-measure">April 2026</p>
+              <h4 class="font-display font-semibold text-xl mt-1">Final build</h4>
+              <p class="mt-2 text-mist leading-relaxed max-w-3xl">We painted the board in a meadow theme and made instruction brochures in English and Spanish.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 max-w-3xl">
+                <figure class="fig"><a href="images/cv-topdown.jpg" class="zoom aspect-[4/3]" data-gallery="ff" data-caption="Final board from above."><img src="images/cv-topdown.jpg" alt="Top-down view of the finished board." loading="lazy" /></a><figcaption>Final, top view.</figcaption></figure>
+                <figure class="fig"><a href="https://www.youtube.com/watch?v=qRW1JOPw_Ok" target="_blank" rel="noopener" class="yt zoom aspect-[4/3] relative" data-yt="qRW1JOPw_Ok" aria-label="Play the Fraction Frenzy demo video"><img src="https://i.ytimg.com/vi/qRW1JOPw_Ok/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span class="grid place-items-center h-14 w-14 rounded-full bg-blueprint text-ink"><i data-lucide="play" class="h-6 w-6"></i></span></span></a><figcaption>Demo video.</figcaption></figure>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <!-- 06 -->
+        <h3 class="sec"><span class="num">06</span>Results vs. requirements</h3>
+        <div class="tbl-wrap mt-6"><table class="tbl">
+          <thead><tr><th>Requirement</th><th>Result</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Piece alignment</td><td>Belt drift reduced by 5 mm over 7 CAD iterations, measured with a ruler</td><td><span class="tag mid">Improved</span></td></tr>
+            <tr><td>Game length ≤ 5 min</td><td>The spinner cut the answers needed from 12 to between 4 and 12. We didn’t time full games.</td><td><span class="tag mid">Not verified</span></td></tr>
+            <tr><td>Simultaneous input</td><td>Both teams can type answers at the same time</td><td><span class="tag ok">Met</span></td></tr>
+            <tr><td>Envelope</td><td>14″ × 14″ × 4″ laser-cut plywood board</td><td><span class="tag ok">Met</span></td></tr>
+            <tr><td>Engaging for students</td><td>Average rating of 8/10 across all criteria from 15 users</td><td><span class="tag ok">Met</span></td></tr>
+            <tr><td>Victory sound</td><td>The passive buzzer was too quiet, so the feature was dropped</td><td><span class="tag no">Not met</span></td></tr>
+            <tr><td>Clean wiring</td><td>Some external keypad wiring was left exposed</td><td><span class="tag no">Not met</span></td></tr>
+            <tr><td>Standalone power</td><td>No power button was added; the game runs from a laptop</td><td><span class="tag no">Not met</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <!-- 07 -->
+        <h3 class="sec"><span class="num">07</span>Lessons and next revision</h3>
+        <ul class="mt-6 grid md:grid-cols-2 gap-4">
+          <li class="panel p-5 text-mist leading-relaxed"><strong class="text-fg">Design belt guides from the start.</strong> Guide blocks, or more precise stand placement, would have prevented much of the drift we spent weeks fixing.</li>
+          <li class="panel p-5 text-mist leading-relaxed"><strong class="text-fg">Add features earlier.</strong> We added the spinner near the end, so we had to redo wiring and code right before the deadline.</li>
+          <li class="panel p-5 text-mist leading-relaxed"><strong class="text-fg">Learn the other parts of the project.</strong> If I had known MicroPython and wiring better, I could have helped more when those parts needed fixing at the end.</li>
+          <li class="panel p-5 text-mist leading-relaxed"><strong class="text-fg">Work in small steps.</strong> Prints take hours, so a little progress every day worked much better for us than catching up at the end.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="border-t border-line">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 grid sm:grid-cols-2 gap-4">
+        <a href="index.html#projects" class="panel lift p-6 flex items-center gap-3"><i data-lucide="arrow-left" class="h-5 w-5 text-mist"></i><span><span class="block text-xs text-mist">Back to</span><span class="font-display font-semibold text-lg">All projects</span></span></a>
+        <a href="research.html" class="panel lift p-6 flex items-center justify-between gap-3 sm:text-right"><span class="sm:ml-auto"><span class="block text-xs text-mist">Next project</span><span class="font-display font-semibold text-lg">Research fixtures and electromagnets</span></span><i data-lucide="arrow-right" class="h-5 w-5 text-mist"></i></a>
+      </div>
+      <p class="mx-auto max-w-6xl px-5 sm:px-8 pb-12 text-mist">Questions about this project? Email me at <a class="text-blueprint hover:underline" href="mailto:lin.jona@northeastern.edu">lin.jona@northeastern.edu</a>.</p>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-mist">
+      <p>© <span id="year"></span> Jonathan Lin</p>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/Creations111" target="_blank" rel="noopener" aria-label="GitHub" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="github" class="h-5 w-5"></i></a>
+        <a href="https://www.linkedin.com/in/jonathan-lin-315327315" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+        <a href="mailto:lin.jona@northeastern.edu" aria-label="Email" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="mail" class="h-5 w-5"></i></a>
+        <a href="#main" aria-label="Back to top" class="grid place-items-center h-10 w-10 rounded hover:bg-blueprint/10 hover:text-fg transition-colors"><i data-lucide="arrow-up" class="h-5 w-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="relative m-auto flex flex-col items-center gap-3 p-4" style="padding-top:calc(16px + env(safe-area-inset-top,0px))">
+      <img id="lb-img" src="" alt="" />
+      <p id="lb-cap" class="max-w-2xl text-center text-sm text-[#c7cede]"></p>
+      <p id="lb-count" class="font-mono text-xs text-[#8e98b0]"></p>
+    </div>
+    <button id="lb-close" class="lb-btn right-4" style="top:calc(16px + env(safe-area-inset-top,0px))" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <button id="lb-prev" class="lb-btn left-3 top-1/2 -translate-y-1/2" aria-label="Previous image"><i data-lucide="chevron-left" class="h-5 w-5"></i></button>
+    <button id="lb-next" class="lb-btn right-3 top-1/2 -translate-y-1/2" aria-label="Next image"><i data-lucide="chevron-right" class="h-5 w-5"></i></button>
+  </dialog>
+
+  <script src="site.js"></script>
+</body>
+</html>
